@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
+import * as database from './data/database';
+import FactionPicker from './components/factionPicker';
 
-const factions = require('./data/factions/factions.json');
+export default class App extends Component {
 
-class App extends Component {
-    buildOptions() {
-        const arr = [];
-
-        for (let f of factions) {
-            arr.push(
-                <option key={f.xws} value="{f.xws}">
-                    {f.name}
-                </option>,
-            );
-        }
-
-        return arr;
+    constructor() {
+        super();
+        database.load();
     }
 
     render() {
@@ -23,11 +15,9 @@ class App extends Component {
             <div className="App">
                 <header className="App-header">
                     Hello
-                    <select>{this.buildOptions()}</select>
+                    <FactionPicker></FactionPicker>
                 </header>
             </div>
         );
     }
 }
-
-export default App;
