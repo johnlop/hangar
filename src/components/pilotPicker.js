@@ -9,12 +9,12 @@ export default class PilotPicker extends Component {
         this.state = {};
 
         this.handleChange = this.handleChange.bind(this);
-
         this.pilotOptions = this.getPilots(props.faction, props.ship);
     }
 
     handleChange(event) {
         this.setState({value: event.target.value});
+        this.props.changePilot(event.target.value);
     }
 
     componentWillReceiveProps(props) {
