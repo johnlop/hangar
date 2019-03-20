@@ -5,6 +5,7 @@
     "devDependencies": {},
     "dependencies": {
         "fs": "0.0.1-security",
+        "memoize-one": "^5.0.0",
         "react": "^16.8.4",
         "react-dom": "^16.8.4",
         "react-scripts": "^2.1.8"

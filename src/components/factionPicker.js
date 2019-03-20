@@ -3,20 +3,21 @@ import * as database from '../data/database';
 
 export default class FactionPicker extends Component {
 
-    constructor() {
-        super();
-        this.state = {value: 'scumandvillainy'};
+    constructor(props) {
+        super(props);
 
-        database.load();
+        this.state = {};
 
         this.handleChange = this.handleChange.bind(this);
+        this.factionOptions = this.getFactions();
     }
 
     handleChange(event) {
-      this.setState({value: event.target.value});
+        this.setState({faction: event.target.value}, this.changeFaction);
+        this.props.changeFaction(event.target.value);
     }
 
-    factionOptions() {
+    getFactions() {
         let arr = [];
 
         for (let key in database.db.factions) {
@@ -32,7 +33,7 @@ export default class FactionPicker extends Component {
 
     render() {
         return (
-            <select value={this.state.value} onChange={this.handleChange}>{this.factionOptions()}</select>
+            <select value={this.state.faction} onChange={this.handleChange}>{this.factionOptions}</select>
         );
     }
 }
