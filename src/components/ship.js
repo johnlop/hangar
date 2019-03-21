@@ -30,9 +30,10 @@ export default class Ship extends Component {
 
     getDial() {
         let dial = [];
-
+        let builder = {};
         for(let m of this.shipInfo.dial){
             let c = m.split('');
+            let speed = c[0];
             let col = '#fff';
             if (c[2] === 'B'){
                 col = '#88F';
@@ -45,10 +46,13 @@ export default class Ship extends Component {
                 case 'O': font += 'stop';
                     break;
                 case 'S': font += 'reversestraight';
+                    speed = '-' + speed;
                     break;
                 case 'A': font += 'reversebankleft';
+                    speed = '-' + speed;
                     break;
                 case 'D': font += 'reversebankright';
+                    speed = '-' + speed;
                     break;
                 case 'E': font += 'trollleft';
                     break;
@@ -64,13 +68,31 @@ export default class Ship extends Component {
                     break;
                 case 'R': font += 'trollright';
                     break;
+                case 'L': font += 'sloopleft';
+                    break;
+                case 'P': font += 'sloopright';
+                    break;
                 case 'K': font += 'kturn';
-                        break;
+                    break;
                 default: 
                     break;
             }
             let el = <i style={{color: col}} className={font}></i>;
-            dial.push(el);
+            
+            if (!builder[speed]){
+                builder[speed] = [];
+            }
+            builder[speed].push(el);
+        }
+
+        let ba = [];
+        for (let b in builder){
+            ba.push([b, builder[b]]);
+        }
+
+        for (let i in builder){
+            let speed = <div>{i} - {builder[i]}</div>;
+            dial.push(speed);
         }
 
         return dial;
