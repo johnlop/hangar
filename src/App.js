@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import './fonts/xwing-miniatures.css';
 import * as database from './data/database';
 import FactionPicker from './components/factionPicker';
 import ShipPicker from './components/shipPicker';
@@ -34,14 +35,17 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <FactionPicker faction={this.state.faction} changeFaction={this.changeFaction}></FactionPicker>
+            <div className="app">
+                <div className="app-header">
+                    <div className="logo">HANGAR 19</div>
+                    <div className="menu"><FactionPicker faction={this.state.faction} changeFaction={this.changeFaction}></FactionPicker></div>
+                </div>
+                <div className="app-body">
                     <ShipPicker faction={this.state.faction} changeShip={this.changeShip}></ShipPicker>
                     <PilotPicker faction={this.state.faction} ship={this.state.ship} changePilot={this.changePilot}></PilotPicker>
                     <Ship faction={this.state.faction} ship={this.state.ship}></Ship>
                     <Pilot faction={this.state.faction} ship={this.state.ship} pilot={this.state.pilot}></Pilot>
-                </header>
+                </div>
             </div>
         );
     }

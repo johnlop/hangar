@@ -9,7 +9,7 @@ export default class Ship extends Component {
         this.state = {};
 
         this.handleChange = this.handleChange.bind(this);
-        this.shipInfo = this.getInfo(props.faction, props.ship);
+        this.loadInfo(props.faction, props.ship);
     }
 
     handleChange(event) {
@@ -18,16 +18,114 @@ export default class Ship extends Component {
     }
 
     componentWillReceiveProps(props) {
-        this.shipInfo = this.getInfo(props.faction, props.ship);
+        this.loadInfo(props.faction, props.ship);
     }
 
-    getInfo(faction, ship) {
-        return database.db.factions[faction].ships[ship];
+    loadInfo(faction, ship) {
+        this.shipInfo = database.db.factions[faction].ships[ship];
+        this.shipDial = this.getDial();
+        this.shipActions = this.getActions();
+        this.shipStats = this.getStats();
+    }
+
+    getDial() {
+        let dial = [];
+
+        for(let m of this.shipInfo.dial){
+            let c = m.split('');
+            let col = '#fff';
+            if (c[2] === 'B'){
+                col = '#88F';
+            }
+            else if (c[2] === 'R') {
+                col = '#F33';
+            }
+            let font = 'xwing-miniatures-font xwing-miniatures-font-';
+            switch (c[1]){
+                case 'O': font += 'stop';
+                    break;
+                case 'S': font += 'reversestraight';
+                    break;
+                case 'A': font += 'reversebankleft';
+                    break;
+                case 'D': font += 'reversebankright';
+                    break;
+                case 'E': font += 'trollleft';
+                    break;
+                case 'T': font += 'turnleft';
+                    break;
+                case 'B': font += 'bankleft';
+                    break;
+                case 'F': font += 'straight';
+                    break;
+                case 'N': font += 'bankright';
+                    break;
+                case 'Y': font += 'turnright';
+                    break;
+                case 'R': font += 'trollright';
+                    break;
+                case 'K': font += 'kturn';
+                        break;
+                default: 
+                    break;
+            }
+            let el = <i style={{color: col}} className={font}></i>;
+            dial.push(el);
+        }
+
+        return dial;
+    }
+
+    getActions() {
+        let act = [];
+        
+        for (let a of this.shipInfo.actions){
+            let col = '#fff';
+            if (a.difficulty === 'Red'){
+                col = '#F33';
+            }
+            let font = 'xwing-miniatures-font xwing-miniatures-font-' + a.type.toLowerCase().replace(/ /g, '');
+            let el = <i style={{color: col}} className={font}></i>;
+            act.push(el);
+        }
+
+        return act;
+    }
+
+    getStats(){
+        let stats = [];
+
+        for(let s of this.shipInfo.stats){
+            let col = '#fff';
+            let font = 'xwing-miniatures-font xwing-miniatures-font-';
+            if (s.type === 'attack'){
+                font += s.arc.toLowerCase().replace(/ /g, '');
+                col = '#f33';
+            }else if (s.type === 'agility'){
+                font += 'agility';
+                col = '#6F6';
+            }else if (s.type === 'hull'){
+                font += 'hull';
+                col = '#FF6';
+            }else if (s.type === 'shields'){
+                font += 'shield';
+                col = '#66F';
+            }
+            let el = <span> {s.value} <i style={{color: col}} className={font}></i></span>;
+            stats.push(el);
+        }
+
+        return stats;
     }
 
     render() {
         return (
-            <div>{this.shipInfo.name}</div>
+            <div>
+                <div>{this.shipInfo.name}</div>
+                <div>{this.shipStats}</div>
+                <div>{this.shipActions}</div>
+                <div>{this.shipDial}</div>
+            </div>
         );
     }
 }

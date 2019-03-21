@@ -14,6 +14,10 @@ export function load() {
     for(let f of manifest.pilots){
         for(let p of f.ships){
             let ship = require(`../${p}`);
+            ship.dialMap = {};
+            for (let m of ship.dial){
+                ship.dialMap[m] = true;
+            }
             db.factions[f.faction].ships.push(ship);
         }
     }

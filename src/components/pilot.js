@@ -21,16 +21,17 @@ export default class Pilot extends Component {
         this.pilotInfo = this.getInfo(props.faction, props.ship, props.pilot);
     }
 
-    getInfo(faction, ship, pilot) {
+    getInfo(faction, ship, pilot) { 
         return database.db.factions[faction].ships[ship].pilots[pilot];
-    }
+    } 
 
     render() {
         return (
             <div>
-                <div>{this.pilotInfo.limited === 1 && '•'} {this.pilotInfo.name} <i>({this.pilotInfo.caption})</i></div>
+                <div>{this.pilotInfo.limited === 1 && '•'} {this.pilotInfo.name} {this.pilotInfo.caption ? <i>({this.pilotInfo.caption})</i> : null} - {this.pilotInfo.cost}pts</div>
                 {/* <img src={this.pilotInfo.image} height="400px"></img> */}
                 <div>{this.pilotInfo.ability}</div>
+                <div>{this.pilotInfo.text}</div>
             </div>
         );
     }
