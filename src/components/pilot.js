@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as database from '../data/database';
+import UpgradePicker from './upgradePicker';
 
 export default class Pilot extends Component {
     constructor(props) {
@@ -29,7 +30,8 @@ export default class Pilot extends Component {
         let arr = [];
 
         for (let s of this.pilotInfo.slots) {
-            arr.push(<span>{s}</span>);
+            let type = s.toLowerCase().replace(/ /g, '');
+            arr.push(<UpgradePicker type={type} />);
         }
 
         return arr;
