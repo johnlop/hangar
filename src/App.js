@@ -3,10 +3,7 @@ import './App.css';
 import './fonts/xwing-miniatures.css';
 import * as database from './data/database';
 import FactionPicker from './components/factionPicker';
-import ShipPicker from './components/shipPicker';
-import PilotPicker from './components/pilotPicker';
-import Pilot from './components/pilot';
-import Ship from './components/ship';
+import ShipContainer from './components/shipContainer';
 
 export default class App extends Component {
 
@@ -41,10 +38,7 @@ export default class App extends Component {
                     <div className="menu"><FactionPicker faction={this.state.faction} changeFaction={this.changeFaction}></FactionPicker></div>
                 </div>
                 <div className="app-body">
-                    <ShipPicker faction={this.state.faction} changeShip={this.changeShip}></ShipPicker>
-                    <PilotPicker faction={this.state.faction} ship={this.state.ship} changePilot={this.changePilot}></PilotPicker>
-                    <Ship faction={this.state.faction} ship={this.state.ship}></Ship>
-                    <Pilot faction={this.state.faction} ship={this.state.ship} pilot={this.state.pilot}></Pilot>
+                    <ShipContainer faction={this.state.faction}></ShipContainer>
                 </div>
             </div>
         );
