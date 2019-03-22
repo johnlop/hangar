@@ -14,11 +14,17 @@ export function load() {
     for (let f of manifest.pilots) {
         for (let p of f.ships) {
             let ship = require(`../${p}`);
-            ship.dialMap = {};
-            for (let m of ship.dial) {
-                ship.dialMap[m] = true;
-            }
             db.factions[f.faction].ships.push(ship);
         }
+    }
+
+    db.upgrades = {};
+    for (let u of manifest.upgrades) {
+        let upg = require(`../${u}`);
+        let name = u
+            .split('/')[2]
+            .replace('.json', '')
+            .replace('-', '');
+        db.upgrades[name] = upg;
     }
 }
