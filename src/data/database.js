@@ -25,6 +25,7 @@ export function load() {
             .split('/')[2]
             .replace('.json', '')
             .replace('-', '');
+        upg.unshift({ name: 'none', cost: { value: 0 }, sides: [{}] });
         db.upgrades[name] = upg;
     }
 }

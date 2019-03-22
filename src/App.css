@@ -1,6 +1,6 @@
 .app {
   color: white;
-  background-color: #010025;
+  background-color: #000000;
   max-height: 100vh;
 }
 
@@ -34,6 +34,31 @@
 select {
   padding: 5px;
   width: 300px;
-  background-color: #010025;
+  background-color: #000000;
   color: #ffffff;
+}
+
+.white {
+  color: #ffffff;
+}
+
+.blue {
+  color: rgb(91, 91, 255);
+}
+
+.red {
+  color: rgb(255, 66, 66);
+}
+
+.green {
+  color: #66FF66;
+}
+
+.yellow {
+  color: rgb(255, 218, 96);
+}
+
+.pilot-skill {
+  font-size: 24px;
+  color: rgb(255, 218, 96);
 }

@@ -5,18 +5,21 @@ export default class UpgradePicker extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = { type: props.type, value: 0 };
 
         this.handleChange = this.handleChange.bind(this);
         this.upgradeOptions = this.getUpgrades(props.type);
+        this.getSelectedUpgrade(0);
     }
 
     handleChange(event) {
+        this.getSelectedUpgrade(event.target.value);
         this.setState({ value: event.target.value });
     }
 
     componentWillReceiveProps(props) {
         this.upgradeOptions = this.getUpgrades(props.type);
+        this.getSelectedUpgrade();
     }
 
     getUpgrades(type) {
@@ -33,11 +36,18 @@ export default class UpgradePicker extends Component {
         return arr;
     }
 
+    getSelectedUpgrade(value) {
+        this.upgrade = database.db.upgrades[this.state.type][value];
+    }
+
     render() {
         return (
-            <select value={this.state.value} onChange={this.handleChange}>
-                {this.upgradeOptions}
-            </select>
+            <div>
+                <select value={this.state.value} onChange={this.handleChange}>
+                    {this.upgradeOptions}
+                </select>
+                <div>{this.upgrade ? this.upgrade.sides[0].ability : null}</div>
+            </div>
         );
     }
 }

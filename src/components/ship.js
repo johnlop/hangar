@@ -12,12 +12,12 @@ export default class Ship extends Component {
     }
 
     handleChange(event) {
-        this.setState({ faction: event.target.value }, this.changeFaction);
-        this.props.changeFaction(event.target.value);
+        this.setState({ faction: event.target.value });
     }
 
     componentWillReceiveProps(props) {
         this.loadInfo(props.faction, props.ship);
+        this.setState({ faction: props.value });
     }
 
     loadInfo(faction, ship) {
@@ -33,11 +33,11 @@ export default class Ship extends Component {
         for (let m of this.shipInfo.dial) {
             let c = m.split('');
             let speed = parseInt(c[0]);
-            let col = '#fff';
+            let col = 'white';
             if (c[2] === 'B') {
-                col = '#88F';
+                col = 'blue';
             } else if (c[2] === 'R') {
-                col = '#F33';
+                col = 'red';
             }
             let font = 'xwing-miniatures-font xwing-miniatures-font-';
             switch (c[1]) {
@@ -89,7 +89,7 @@ export default class Ship extends Component {
                 default:
                     break;
             }
-            let el = <i style={{ color: col }} className={font} />;
+            let el = <i className={font + ' ' + col} />;
 
             if (!builder[speed]) {
                 builder[speed] = [];
@@ -121,12 +121,12 @@ export default class Ship extends Component {
         let act = [];
 
         for (let a of this.shipInfo.actions) {
-            let col = '#fff';
+            let col = 'white';
             if (a.difficulty === 'Red') {
-                col = '#F33';
+                col = 'red';
             }
             let font = 'xwing-miniatures-font xwing-miniatures-font-' + a.type.toLowerCase().replace(/ /g, '');
-            let el = <i style={{ color: col }} className={font} />;
+            let el = <i className={font + ' ' + col} />;
             act.push(el);
         }
 
@@ -137,25 +137,25 @@ export default class Ship extends Component {
         let stats = [];
 
         for (let s of this.shipInfo.stats) {
-            let col = '#fff';
-            let font = 'xwing-miniatures-font xwing-miniatures-font-';
+            let col = 'white';
+            let className = 'xwing-miniatures-font xwing-miniatures-font-';
             if (s.type === 'attack') {
-                font += s.arc.toLowerCase().replace(/ /g, '');
-                col = '#f33';
+                className += s.arc.toLowerCase().replace(/ /g, '');
+                col = 'red';
             } else if (s.type === 'agility') {
-                font += 'agility';
-                col = '#6F6';
+                className += 'agility';
+                col = 'green';
             } else if (s.type === 'hull') {
-                font += 'hull';
-                col = '#FF6';
+                className += 'hull';
+                col = 'yellow';
             } else if (s.type === 'shields') {
-                font += 'shield';
-                col = '#66F';
+                className += 'shield';
+                col = 'blue';
             }
             let el = (
                 <span>
                     {' '}
-                    {s.value} <i style={{ color: col }} className={font} />
+                    {s.value} <i className={className + ' ' + col} />
                 </span>
             );
             stats.push(el);
