@@ -6,10 +6,10 @@ export default class Pilot extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = { faction: props.faction, shipId: props.shipId, pilotId: props.pilotId };
 
         this.handleChange = this.handleChange.bind(this);
-        this.getInfo(props.faction, props.ship, props.pilot);
+        this.getInfo(props.faction, props.shipId, props.pilotId);
     }
 
     handleChange(event) {
@@ -19,16 +19,16 @@ export default class Pilot extends Component {
     componentDidUpdate(prevProps) {
         if (
             this.props.faction !== prevProps.faction ||
-            this.props.ship !== prevProps.ship ||
-            this.props.pilot !== prevProps.pilot
+            this.props.shipId !== prevProps.shipId ||
+            this.props.pilotId !== prevProps.pilotId
         ) {
             this.setState({ faction: this.props.value });
-            this.getInfo(this.props.faction, this.props.ship, this.props.pilot);
+            this.getInfo(this.props.faction, this.props.shipId, this.props.pilotId);
         }
     }
 
-    getInfo(faction, ship, pilot) {
-        this.pilotInfo = database.db.factions[faction].ships[ship].pilots[pilot];
+    getInfo(faction, shipId, pilotId) {
+        this.pilotInfo = database.db.factions[faction].ships[shipId].pilots[pilotId];
         this.slots = this.getSlots();
     }
 

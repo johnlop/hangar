@@ -5,10 +5,10 @@ export default class Ship extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = { faction: props.faction, shipId: props.shipId };
 
         this.handleChange = this.handleChange.bind(this);
-        this.loadInfo(props.faction, props.ship);
+        this.loadInfo(props.faction, props.shipId);
     }
 
     handleChange(event) {
@@ -16,14 +16,14 @@ export default class Ship extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.faction !== prevProps.faction || this.props.ship !== prevProps.ship) {
+        if (this.props.faction !== prevProps.faction || this.props.shipId !== prevProps.shipId) {
             this.setState({ faction: this.props.faction });
-            this.loadInfo(this.props.faction, this.props.ship);
+            this.loadInfo(this.props.faction, this.props.shipId);
         }
     }
 
-    loadInfo(faction, ship) {
-        this.shipInfo = database.db.factions[faction].ships[ship];
+    loadInfo(faction, shipId) {
+        this.shipInfo = database.db.factions[faction].ships[shipId];
         this.shipDial = this.getDial();
         this.shipActions = this.getActions();
         this.shipStats = this.getStats();
