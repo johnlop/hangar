@@ -16,9 +16,15 @@ export default class Pilot extends Component {
         this.setState({ faction: event.target.value });
     }
 
-    componentWillReceiveProps(props) {
-        this.getInfo(props.faction, props.ship, props.pilot);
-        this.setState({ faction: props.value });
+    componentDidUpdate(prevProps) {
+        if (
+            this.props.faction !== prevProps.faction ||
+            this.props.ship !== prevProps.ship ||
+            this.props.pilot !== prevProps.pilot
+        ) {
+            this.setState({ faction: this.props.value });
+            this.getInfo(this.props.faction, this.props.ship, this.props.pilot);
+        }
     }
 
     getInfo(faction, ship, pilot) {

@@ -15,9 +15,11 @@ export default class Ship extends Component {
         this.setState({ faction: event.target.value });
     }
 
-    componentWillReceiveProps(props) {
-        this.loadInfo(props.faction, props.ship);
-        this.setState({ faction: props.value });
+    componentDidUpdate(prevProps) {
+        if (this.props.faction !== prevProps.faction || this.props.ship !== prevProps.ship) {
+            this.setState({ faction: this.props.faction });
+            this.loadInfo(this.props.faction, this.props.ship);
+        }
     }
 
     loadInfo(faction, ship) {

@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import * as database from '../data/database';
+import Ship from './ship';
 
 export default class ShipPicker extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = { faction: props.faction, ship: 0 };
 
         this.handleChange = this.handleChange.bind(this);
-        this.shipOptions = this.getShips(props.faction);
     }
 
     handleChange(event) {
-        this.setState({ value: event.target.value });
+        this.setState({ ship: event.target.value });
         this.props.changeShip(event.target.value);
     }
 
-    componentWillReceiveProps(props) {
-        this.shipOptions = this.getShips(props.faction);
+    componentDidUpdate(prevProps) {
+        if (this.props.faction !== prevProps.faction) {
+            this.setState({ faction: this.props.faction, ship: 0 });
+        }
     }
 
     getShips(faction) {
@@ -35,10 +37,15 @@ export default class ShipPicker extends Component {
     }
 
     render() {
+        this.shipOptions = this.getShips(this.state.faction);
+
         return (
-            <select value={this.state.value} onChange={this.handleChange}>
-                {this.shipOptions}
-            </select>
+            <div>
+                <select value={this.state.ship} onChange={this.handleChange}>
+                    {this.shipOptions}
+                </select>
+                <Ship faction={this.state.faction} ship={this.state.ship} />
+            </div>
         );
     }
 }

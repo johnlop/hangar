@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ShipPicker from './shipPicker';
 import PilotPicker from './pilotPicker';
-import Pilot from './pilot';
-import Ship from './ship';
 
 export default class ShipContainer extends Component {
     constructor(props) {
@@ -11,28 +9,23 @@ export default class ShipContainer extends Component {
         this.state = { faction: props.faction, ship: 0, pilot: 0 };
 
         this.changeShip = this.changeShip.bind(this);
-        this.changePilot = this.changePilot.bind(this);
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({ faction: props.faction, ship: 0, pilot: 0 });
+    componentDidUpdate(prevProps) {
+        if (this.props.faction !== prevProps.faction) {
+            this.setState({ faction: this.props.faction, ship: 0, pilot: 0 });
+        }
     }
 
     changeShip(value) {
         this.setState({ ship: value, pilot: 0 });
     }
 
-    changePilot(value) {
-        this.setState({ pilot: value });
-    }
-
     render() {
         return (
             <div>
                 <ShipPicker faction={this.state.faction} changeShip={this.changeShip} />
-                <PilotPicker faction={this.state.faction} ship={this.state.ship} changePilot={this.changePilot} />
-                <Ship faction={this.state.faction} ship={this.state.ship} />
-                <Pilot faction={this.state.faction} ship={this.state.ship} pilot={this.state.pilot} />
+                <PilotPicker faction={this.state.faction} ship={this.state.ship} />
             </div>
         );
     }

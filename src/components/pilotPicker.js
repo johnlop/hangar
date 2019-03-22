@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import * as database from '../data/database';
+import Pilot from './pilot';
 
 export default class PilotPicker extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = { faction: props.faction, ship: props.ship, pilot: 0 };
 
         this.handleChange = this.handleChange.bind(this);
-        this.pilotOptions = this.getPilots(props.faction, props.ship);
     }
 
     handleChange(event) {
-        this.setState({ value: event.target.value });
-        this.props.changePilot(event.target.value);
+        this.setState({ pilot: event.target.value });
     }
 
-    componentWillReceiveProps(props) {
-        this.pilotOptions = this.getPilots(props.faction, props.ship);
+    componentDidUpdate(prevProps) {
+        if (this.props.faction !== prevProps.faction || this.props.ship !== prevProps.ship) {
+            this.setState({ faction: this.props.faction, ship: this.props.ship, pilot: 0 });
+        }
     }
 
     getPilots(faction, ship) {
@@ -35,10 +36,15 @@ export default class PilotPicker extends Component {
     }
 
     render() {
+        this.pilotOptions = this.getPilots(this.state.faction, this.state.ship);
+
         return (
-            <select value={this.state.value} onChange={this.handleChange}>
-                {this.pilotOptions}
-            </select>
+            <div>
+                <select value={this.state.pilot} onChange={this.handleChange}>
+                    {this.pilotOptions}
+                </select>
+                <Pilot faction={this.state.faction} ship={this.state.ship} pilot={this.state.pilot} />
+            </div>
         );
     }
 }
