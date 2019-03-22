@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import * as database from '../data/database';
 
 export default class Pilot extends Component {
-
     constructor(props) {
         super(props);
 
@@ -13,7 +12,7 @@ export default class Pilot extends Component {
     }
 
     handleChange(event) {
-        this.setState({faction: event.target.value}, this.changeFaction);
+        this.setState({ faction: event.target.value }, this.changeFaction);
         this.props.changeFaction(event.target.value);
     }
 
@@ -21,15 +20,15 @@ export default class Pilot extends Component {
         this.getInfo(props.faction, props.ship, props.pilot);
     }
 
-    getInfo(faction, ship, pilot) { 
+    getInfo(faction, ship, pilot) {
         this.pilotInfo = database.db.factions[faction].ships[ship].pilots[pilot];
         this.slots = this.getSlots();
     }
 
-    getSlots(){
+    getSlots() {
         let arr = [];
 
-        for(let s of this.pilotInfo.slots){
+        for (let s of this.pilotInfo.slots) {
             arr.push(<span>{s}</span>);
         }
 
@@ -39,7 +38,10 @@ export default class Pilot extends Component {
     render() {
         return (
             <div>
-                <div>{this.pilotInfo.limited === 1 && '•'} {this.pilotInfo.name} {this.pilotInfo.caption ? <i>({this.pilotInfo.caption})</i> : null} - {this.pilotInfo.cost}pts</div>
+                <div>
+                    {this.pilotInfo.limited === 1 && '•'} {this.pilotInfo.name}{' '}
+                    {this.pilotInfo.caption ? <i>({this.pilotInfo.caption})</i> : null} - {this.pilotInfo.cost}pts
+                </div>
                 {/* <img src={this.pilotInfo.image} height="400px"></img> */}
                 <div>{this.pilotInfo.ability}</div>
                 <div>{this.pilotInfo.text}</div>

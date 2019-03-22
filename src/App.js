@@ -6,12 +6,11 @@ import FactionPicker from './components/factionPicker';
 import ShipContainer from './components/shipContainer';
 
 export default class App extends Component {
-
     constructor() {
         super();
         database.load();
 
-        this.state = {faction: 'rebelalliance', ship: 0, pilot: 0};
+        this.state = { faction: 'rebelalliance', ship: 0, pilot: 0 };
 
         this.changeFaction = this.changeFaction.bind(this);
         this.changeShip = this.changeShip.bind(this);
@@ -19,15 +18,15 @@ export default class App extends Component {
     }
 
     changeFaction(value) {
-        this.setState({faction: value, ship: 0, pilot: 0});
+        this.setState({ faction: value, ship: 0, pilot: 0 });
     }
 
     changeShip(value) {
-        this.setState({ship: value, pilot: 0});
+        this.setState({ ship: value, pilot: 0 });
     }
 
     changePilot(value) {
-        this.setState({pilot: value});
+        this.setState({ pilot: value });
     }
 
     render() {
@@ -35,10 +34,12 @@ export default class App extends Component {
             <div className="app">
                 <div className="app-header">
                     <div className="logo">HANGAR 19</div>
-                    <div className="menu"><FactionPicker faction={this.state.faction} changeFaction={this.changeFaction}></FactionPicker></div>
+                    <div className="menu">
+                        <FactionPicker faction={this.state.faction} changeFaction={this.changeFaction} />
+                    </div>
                 </div>
                 <div className="app-body">
-                    <ShipContainer faction={this.state.faction}></ShipContainer>
+                    <ShipContainer faction={this.state.faction} />
                 </div>
             </div>
         );

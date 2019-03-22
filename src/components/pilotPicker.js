@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import * as database from '../data/database';
 
 export default class PilotPicker extends Component {
-
     constructor(props) {
         super(props);
 
@@ -13,7 +12,7 @@ export default class PilotPicker extends Component {
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        this.setState({ value: event.target.value });
         this.props.changePilot(event.target.value);
     }
 
@@ -37,7 +36,9 @@ export default class PilotPicker extends Component {
 
     render() {
         return (
-            <select value={this.state.value} onChange={this.handleChange}>{this.pilotOptions}</select>
+            <select value={this.state.value} onChange={this.handleChange}>
+                {this.pilotOptions}
+            </select>
         );
     }
 }

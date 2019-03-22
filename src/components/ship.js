@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import * as database from '../data/database';
 
 export default class Ship extends Component {
-
     constructor(props) {
         super(props);
 
@@ -13,7 +12,7 @@ export default class Ship extends Component {
     }
 
     handleChange(event) {
-        this.setState({faction: event.target.value}, this.changeFaction);
+        this.setState({ faction: event.target.value }, this.changeFaction);
         this.props.changeFaction(event.target.value);
     }
 
@@ -31,70 +30,87 @@ export default class Ship extends Component {
     getDial() {
         let dial = [];
         let builder = {};
-        for(let m of this.shipInfo.dial){
+        for (let m of this.shipInfo.dial) {
             let c = m.split('');
             let speed = parseInt(c[0]);
             let col = '#fff';
-            if (c[2] === 'B'){
+            if (c[2] === 'B') {
                 col = '#88F';
-            }
-            else if (c[2] === 'R') {
+            } else if (c[2] === 'R') {
                 col = '#F33';
             }
             let font = 'xwing-miniatures-font xwing-miniatures-font-';
-            switch (c[1]){
-                case 'O': font += 'stop';
+            switch (c[1]) {
+                case 'O':
+                    font += 'stop';
                     break;
-                case 'S': font += 'reversestraight';
+                case 'S':
+                    font += 'reversestraight';
                     speed = -speed;
                     break;
-                case 'A': font += 'reversebankleft';
+                case 'A':
+                    font += 'reversebankleft';
                     speed = -speed;
                     break;
-                case 'D': font += 'reversebankright';
+                case 'D':
+                    font += 'reversebankright';
                     speed = -speed;
                     break;
-                case 'E': font += 'trollleft';
+                case 'E':
+                    font += 'trollleft';
                     break;
-                case 'T': font += 'turnleft';
+                case 'T':
+                    font += 'turnleft';
                     break;
-                case 'B': font += 'bankleft';
+                case 'B':
+                    font += 'bankleft';
                     break;
-                case 'F': font += 'straight';
+                case 'F':
+                    font += 'straight';
                     break;
-                case 'N': font += 'bankright';
+                case 'N':
+                    font += 'bankright';
                     break;
-                case 'Y': font += 'turnright';
+                case 'Y':
+                    font += 'turnright';
                     break;
-                case 'R': font += 'trollright';
+                case 'R':
+                    font += 'trollright';
                     break;
-                case 'L': font += 'sloopleft';
+                case 'L':
+                    font += 'sloopleft';
                     break;
-                case 'P': font += 'sloopright';
+                case 'P':
+                    font += 'sloopright';
                     break;
-                case 'K': font += 'kturn';
+                case 'K':
+                    font += 'kturn';
                     break;
-                default: 
+                default:
                     break;
             }
-            let el = <i style={{color: col}} className={font}></i>;
-            
-            if (!builder[speed]){
+            let el = <i style={{ color: col }} className={font} />;
+
+            if (!builder[speed]) {
                 builder[speed] = [];
             }
             builder[speed].push(el);
         }
 
         let ba = [];
-        for (let b in builder){
+        for (let b in builder) {
             ba.push([b, builder[b]]);
         }
-        ba.sort((a,b) => {
+        ba.sort((a, b) => {
             return b[0] - a[0];
         });
 
-        for (let i in ba){
-            let speed = <div>{ba[i][0]} - {ba[i][1]}</div>;
+        for (let i in ba) {
+            let speed = (
+                <div>
+                    {ba[i][0]} - {ba[i][1]}
+                </div>
+            );
             dial.push(speed);
         }
 
@@ -103,40 +119,45 @@ export default class Ship extends Component {
 
     getActions() {
         let act = [];
-        
-        for (let a of this.shipInfo.actions){
+
+        for (let a of this.shipInfo.actions) {
             let col = '#fff';
-            if (a.difficulty === 'Red'){
+            if (a.difficulty === 'Red') {
                 col = '#F33';
             }
             let font = 'xwing-miniatures-font xwing-miniatures-font-' + a.type.toLowerCase().replace(/ /g, '');
-            let el = <i style={{color: col}} className={font}></i>;
+            let el = <i style={{ color: col }} className={font} />;
             act.push(el);
         }
 
         return act;
     }
 
-    getStats(){
+    getStats() {
         let stats = [];
 
-        for(let s of this.shipInfo.stats){
+        for (let s of this.shipInfo.stats) {
             let col = '#fff';
             let font = 'xwing-miniatures-font xwing-miniatures-font-';
-            if (s.type === 'attack'){
+            if (s.type === 'attack') {
                 font += s.arc.toLowerCase().replace(/ /g, '');
                 col = '#f33';
-            }else if (s.type === 'agility'){
+            } else if (s.type === 'agility') {
                 font += 'agility';
                 col = '#6F6';
-            }else if (s.type === 'hull'){
+            } else if (s.type === 'hull') {
                 font += 'hull';
                 col = '#FF6';
-            }else if (s.type === 'shields'){
+            } else if (s.type === 'shields') {
                 font += 'shield';
                 col = '#66F';
             }
-            let el = <span> {s.value} <i style={{color: col}} className={font}></i></span>;
+            let el = (
+                <span>
+                    {' '}
+                    {s.value} <i style={{ color: col }} className={font} />
+                </span>
+            );
             stats.push(el);
         }
 

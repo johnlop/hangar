@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import * as database from '../data/database';
 
 export default class FactionPicker extends Component {
-
     constructor(props) {
         super(props);
 
@@ -13,7 +12,7 @@ export default class FactionPicker extends Component {
     }
 
     handleChange(event) {
-        this.setState({faction: event.target.value}, this.changeFaction);
+        this.setState({ faction: event.target.value }, this.changeFaction);
         this.props.changeFaction(event.target.value);
     }
 
@@ -33,7 +32,9 @@ export default class FactionPicker extends Component {
 
     render() {
         return (
-            <select value={this.state.faction} onChange={this.handleChange}>{this.factionOptions}</select>
+            <select value={this.state.faction} onChange={this.handleChange}>
+                {this.factionOptions}
+            </select>
         );
     }
 }

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import * as database from '../data/database';
 
 export default class ShipPicker extends Component {
-
     constructor(props) {
         super(props);
 
@@ -13,7 +12,7 @@ export default class ShipPicker extends Component {
     }
 
     handleChange(event) {
-        this.setState({value: event.target.value});
+        this.setState({ value: event.target.value });
         this.props.changeShip(event.target.value);
     }
 
@@ -37,7 +36,9 @@ export default class ShipPicker extends Component {
 
     render() {
         return (
-            <select value={this.state.value} onChange={this.handleChange}>{this.shipOptions}</select>
+            <select value={this.state.value} onChange={this.handleChange}>
+                {this.shipOptions}
+            </select>
         );
     }
 }
