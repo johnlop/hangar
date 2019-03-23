@@ -1,0 +1,40 @@
+export default function getQuote() {
+    let quotes = [
+        'Great, kid. Don’t get cocky.',
+        'Traveling through hyperspace ain’t like dusting crops, farm boy.',
+        'Great shot kid, that was one in a million.',
+        'I’ve got a bad feeling about this.',
+        'That’s no moon.',
+        'It’s the ship that made the Kessel Run in less than 12 parsecs.',
+        'She may not look like much, but she’s got it where it counts, kid.',
+        'Never tell me the odds.',
+        'The force is strong with this one.',
+        'I find your lack of faith disturbing.',
+        'No. I am your Father.',
+        'Mmm. Lost a planet, Master Obi-Wan has. How embarrassing.',
+        'It’s a trap!',
+        'Don’t call me a mindless philosopher, you overweight glob of grease.',
+        'We’re doomed.',
+        'Sir, the possibility of successfully navigating an asteroid field is approximately 3,720 to 1.',
+        'Now that’s a name I have not heard in a long time. A long time.',
+        'These aren’t the droids you’re looking for…',
+        'An elegant weapon for a more civilized age.',
+        'Mos Eisley spaceport. You will never find a more wretched hive of scum and villainy.',
+        'Help me Obi-Wan Kenobi, you’re my only hope.',
+        'You came in that thing? You’re braver than I thought.',
+        'Into the garbage chute, flyboy!',
+        'I recognized your foul stench when I was brought on board.',
+        'Aren’t you a little short for a stormtrooper?',
+        'If there’s a bright centre to the universe, you’re on the planet that it’s farthest from.',
+        'I used to bullseye womp rats in my T-16 back home, they’re not much bigger than 2 meters',
+        'But I was going into Tosche Station to pick up some power converters!',
+        'Do. Or do not. There is no try.',
+        'Stay on target.',
+        'I got a problem here. My converter’s running wild.',
+        'You’re too low. Pull up!',
+        'Cover me, Porkins!',
+    ];
+
+    let r = Math.floor(Math.random() * (quotes.length + 1));
+    return quotes[r];
+}

@@ -169,7 +169,7 @@ export default class Ship extends Component {
     render() {
         return (
             <div>
-                <div>{this.shipInfo.name}</div>
+                <div className='title'>{this.shipInfo.name}</div>
                 <div>{this.shipStats}</div>
                 <div>{this.shipActions}</div>
                 <div>{this.shipDial}</div>

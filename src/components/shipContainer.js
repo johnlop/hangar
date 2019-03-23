@@ -23,7 +23,7 @@ export default class ShipContainer extends Component {
 
     render() {
         return (
-            <div>
+            <div className='container'>
                 <ShipPicker faction={this.state.faction} changeShip={this.changeShip} />
                 <PilotPicker faction={this.state.faction} shipId={this.state.shipId} />
             </div>

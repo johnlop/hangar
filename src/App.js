@@ -4,6 +4,7 @@ import './fonts/xwing-miniatures.css';
 import * as database from './data/database';
 import FactionPicker from './components/factionPicker';
 import ShipContainer from './components/shipContainer';
+import getQuote from './data/quotes';
 
 export default class App extends Component {
     constructor() {
@@ -32,14 +33,18 @@ export default class App extends Component {
     render() {
         return (
             <div className="app">
-                <div className="app-header">
+                <div className="header">
                     <div className="logo">HANGAR 19</div>
                     <div className="menu">
                         <FactionPicker faction={this.state.faction} changeFaction={this.changeFaction} />
                     </div>
                 </div>
-                <div className="app-body">
+                <div className="body">
                     <ShipContainer faction={this.state.faction} />
+                    <ShipContainer faction={this.state.faction} />
+                </div>
+                <div className="footer">
+                    <span className="fluff">{getQuote()}</span>
                 </div>
             </div>
         );

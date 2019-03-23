@@ -1,16 +1,23 @@
 .app {
   color: white;
   background-color: #000000;
-  max-height: 100vh;
 }
 
-.app-header {
+.header {
   text-align: left;
-  min-height: 5vh;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
+}
+
+.footer{
+  margin-top: 5vh;
+  padding: 20px;
+  background-color: rgba(255,255,255,0.1);
+  font-size: 12px;
+  text-align: center;
 }
 
 .logo {
@@ -21,7 +28,7 @@
   padding: 0 10px;
 }
 
-.app-body {
+.body {
   text-align: center;
   min-height: 95vh;
   display: flex;
@@ -31,11 +38,39 @@
   font-size: calc(18px);
 }
 
+.container{
+  padding: 10px;
+  margin: 10px;
+  display: flex;
+  background-color: rgba(255,255,255,0.1)
+}
+
+.block{
+  width: 400px;
+}
+
 select {
+  margin: 5px;
   padding: 5px;
   width: 300px;
   background-color: #000000;
   color: #ffffff;
+  border: 1px solid #333;
+}
+select:focus{
+  outline:0;
+}
+
+p{
+  font-size: 14px;
+}
+
+.fluff {
+  font-style: italic;
+}
+
+.title {
+  font-weight: bold;
 }
 
 .white {
@@ -60,5 +95,6 @@ select {
 
 .pilot-skill {
   font-size: 24px;
+  font-weight: bold;
   color: rgb(255, 218, 96);
 }

@@ -14,6 +14,10 @@ export function load() {
     for (let f of manifest.pilots) {
         for (let p of f.ships) {
             let ship = require(`../${p}`);
+            ship.statsMap = {};
+            for (let s of ship.stats){
+                ship.statsMap[s.type] = s.value;
+            }
             db.factions[f.faction].ships.push(ship);
         }
     }
@@ -21,11 +25,8 @@ export function load() {
     db.upgrades = {};
     for (let u of manifest.upgrades) {
         let upg = require(`../${u}`);
-        let name = u
-            .split('/')[2]
-            .replace('.json', '')
-            .replace('-', '');
-        upg.unshift({ name: 'none', cost: { value: 0 }, sides: [{}] });
-        db.upgrades[name] = upg;
+        let name = u.split('/')[2].replace('.json', '');
+        upg.unshift({ name: 'No ' + name, cost: { value: 0 }, sides: [{}] });
+        db.upgrades[name.replace('-', '')] = upg;
     }
 }

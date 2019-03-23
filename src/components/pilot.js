@@ -28,16 +28,17 @@ export default class Pilot extends Component {
     }
 
     getInfo(faction, shipId, pilotId) {
-        this.pilotInfo = database.db.factions[faction].ships[shipId].pilots[pilotId];
+        this.ship = database.db.factions[faction].ships[shipId];
+        this.pilot = database.db.factions[faction].ships[shipId].pilots[pilotId];
         this.slots = this.getSlots();
     }
 
     getSlots() {
         let arr = [];
 
-        for (let s of this.pilotInfo.slots) {
+        for (let s of this.pilot.slots) {
             let type = s.toLowerCase().replace(/ /g, '');
-            arr.push(<UpgradePicker type={type} />);
+            arr.push(<UpgradePicker type={type} pilot={this.pilot} ship={this.ship} />);
         }
 
         return arr;
@@ -47,18 +48,18 @@ export default class Pilot extends Component {
         return (
             <div>
                 <div>
-                    <b className={'pilot-skill'}>{this.pilotInfo.initiative}</b> {this.pilotInfo.limited === 1 && '•'}{' '}
-                    {this.pilotInfo.name} {this.pilotInfo.caption ? <i>({this.pilotInfo.caption})</i> : null} -{' '}
-                    {this.pilotInfo.cost}pts
+                    <span className='pilot-skill'>{this.pilot.initiative}</span> {this.pilot.limited === 1 && '•'}{' '}
+                    <span className='title'>{this.pilot.name}</span> {this.pilot.caption ? <span className='fluff'>({this.pilot.caption})</span> : null} -{' '}
+                    {this.pilot.cost}pts
                 </div>
-                {/* <img src={this.pilotInfo.image} height="400px"></img> */}
-                <div>{this.pilotInfo.ability}</div>
-                <div>
-                    {this.pilotInfo.shipAbility
-                        ? `${this.pilotInfo.shipAbility.name}: ${this.pilotInfo.shipAbility.text}`
+                {/* <img src={this.pilot.image} height="400px"></img> */}
+                <p>{this.pilot.ability}</p>
+                <p>
+                    {this.pilot.shipAbility
+                        ? `${this.pilot.shipAbility.name}: ${this.pilot.shipAbility.text}`
                         : null}
-                </div>
-                <div>{this.pilotInfo.text}</div>
+                </p>
+                <p className='fluff'>{this.pilot.text}</p>
                 <div>{this.slots}</div>
             </div>
         );

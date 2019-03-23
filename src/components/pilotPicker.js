@@ -39,7 +39,7 @@ export default class PilotPicker extends Component {
         this.pilotOptions = this.getPilots(this.state.faction, this.state.shipId);
 
         return (
-            <div>
+            <div className='block'>
                 <select value={this.state.pilotId} onChange={this.handleChange}>
                     {this.pilotOptions}
                 </select>

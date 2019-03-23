@@ -5,7 +5,7 @@ export default class UpgradePicker extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { type: props.type, upgradeId: 0 };
+        this.state = { ship: props.ship, pilot: props.pilot, type: props.type, upgradeId: 0 };
 
         this.handleChange = this.handleChange.bind(this);
     }
@@ -24,9 +24,25 @@ export default class UpgradePicker extends Component {
         let arr = [];
 
         for (let key in database.db.upgrades[type]) {
+            let upg = database.db.upgrades[type][key];
+            let cost = 999;
+            if (upg.cost) {
+                if (upg.cost.value !== undefined) {
+                    cost = upg.cost.value;
+                } else if (upg.cost.variable) {
+                    let stat = upg.cost.variable;
+                    if (stat === 'initiative') {
+                        cost = upg.cost.values[this.state.pilot.initiative];
+                    } else if (stat === 'size') {
+                        cost = upg.cost.values[this.state.ship.size];
+                    } else {
+                        cost = upg.cost.values[this.state.ship.statsMap[stat]];
+                    }
+                }
+            }
             arr.push(
                 <option key={key} value={key}>
-                    {`${database.db.upgrades[type][key].name} - ${database.db.upgrades[type][key].cost.value}pts`}
+                    {`${database.db.upgrades[type][key].name} - ${cost}pts`}
                 </option>,
             );
         }
@@ -43,7 +59,7 @@ export default class UpgradePicker extends Component {
                 <select value={this.state.upgradeId} onChange={this.handleChange}>
                     {this.upgradeOptions}
                 </select>
-                <div>{this.upgrade ? this.upgrade.sides[0].ability : null}</div>
+                <p>{this.upgrade ? this.upgrade.sides[0].ability : null}</p>
             </div>
         );
     }
