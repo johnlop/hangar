@@ -35,10 +35,11 @@ export default class Pilot extends Component {
 
     getSlots() {
         let arr = [];
-
+        let i = 0;
         for (let s of this.pilot.slots) {
             let type = s.toLowerCase().replace(/ /g, '');
-            arr.push(<UpgradePicker type={type} pilot={this.pilot} ship={this.ship} />);
+            arr.push(<UpgradePicker key={i} type={type} pilot={this.pilot} ship={this.ship} />);
+            i++;
         }
 
         return arr;
@@ -48,18 +49,14 @@ export default class Pilot extends Component {
         return (
             <div>
                 <div>
-                    <span className='pilot-skill'>{this.pilot.initiative}</span> {this.pilot.limited === 1 && '•'}{' '}
-                    <span className='title'>{this.pilot.name}</span> {this.pilot.caption ? <span className='fluff'>({this.pilot.caption})</span> : null} -{' '}
+                    <span className="pilot-skill">{this.pilot.initiative}</span> {this.pilot.limited === 1 && '•'}{' '}
+                    <span className="title">{this.pilot.name}</span> {this.pilot.caption ? <span className="fluff">({this.pilot.caption})</span> : null} -{' '}
                     {this.pilot.cost}pts
                 </div>
                 {/* <img src={this.pilot.image} height="400px"></img> */}
                 <p>{this.pilot.ability}</p>
-                <p>
-                    {this.pilot.shipAbility
-                        ? `${this.pilot.shipAbility.name}: ${this.pilot.shipAbility.text}`
-                        : null}
-                </p>
-                <p className='fluff'>{this.pilot.text}</p>
+                {this.pilot.shipAbility ? <p><span className="title">{this.pilot.shipAbility.name}{':'}</span> {this.pilot.shipAbility.text}</p> : null}
+                <p className="fluff">{this.pilot.text}</p>
                 <div>{this.slots}</div>
             </div>
         );

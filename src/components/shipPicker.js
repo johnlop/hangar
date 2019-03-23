@@ -40,7 +40,7 @@ export default class ShipPicker extends Component {
         this.shipOptions = this.getShips(this.state.faction);
 
         return (
-            <div className='block'>
+            <div className="block">
                 <select value={this.state.shipId} onChange={this.handleChange}>
                     {this.shipOptions}
                 </select>

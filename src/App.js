@@ -11,23 +11,28 @@ export default class App extends Component {
         super();
         database.load();
 
-        this.state = { faction: 'rebelalliance', ship: 0, pilot: 0 };
-
+        this.state = { faction: 'rebelalliance', ships: [{}] };
+        this.shipSeq = 1;
         this.changeFaction = this.changeFaction.bind(this);
-        this.changeShip = this.changeShip.bind(this);
-        this.changePilot = this.changePilot.bind(this);
+        this.addShip = this.addShip.bind(this);
+        this.deleteShip = this.deleteShip.bind(this);
     }
 
     changeFaction(value) {
-        this.setState({ faction: value, ship: 0, pilot: 0 });
+        this.setState({ faction: value, ships: [] });
+        this.shipSeq = 0;
     }
 
-    changeShip(value) {
-        this.setState({ ship: value, pilot: 0 });
+    addShip() {
+        let s = this.state.ships;
+        s.push({});
+        this.setState({ ships: s });
     }
 
-    changePilot(value) {
-        this.setState({ pilot: value });
+    deleteShip(i) {
+        let s = this.state.ships;
+        s.splice(i, 1);
+        this.setState({ ships: s });
     }
 
     render() {
@@ -40,8 +45,8 @@ export default class App extends Component {
                     </div>
                 </div>
                 <div className="body">
-                    <ShipContainer faction={this.state.faction} />
-                    <ShipContainer faction={this.state.faction} />
+                    {this.state.ships.map((s, i) => <ShipContainer key={i} k={i} faction={this.state.faction} deleteShip={this.deleteShip} />)}
+                    <button onClick={this.addShip}>+</button>
                 </div>
                 <div className="footer">
                     <span className="fluff">{getQuote()}</span>

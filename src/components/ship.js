@@ -91,11 +91,11 @@ export default class Ship extends Component {
                 default:
                     break;
             }
-            let el = <i className={font + ' ' + col} />;
 
             if (!builder[speed]) {
                 builder[speed] = [];
             }
+            let el = <i key={builder[speed].length - 1} className={font + ' ' + col} />;
             builder[speed].push(el);
         }
 
@@ -109,7 +109,7 @@ export default class Ship extends Component {
 
         for (let i in ba) {
             let speed = (
-                <div>
+                <div key={dial.length}>
                     {ba[i][0]} - {ba[i][1]}
                 </div>
             );
@@ -121,14 +121,13 @@ export default class Ship extends Component {
 
     getActions() {
         let act = [];
-
         for (let a of this.shipInfo.actions) {
             let col = 'white';
             if (a.difficulty === 'Red') {
                 col = 'red';
             }
             let font = 'xwing-miniatures-font xwing-miniatures-font-' + a.type.toLowerCase().replace(/ /g, '');
-            let el = <i className={font + ' ' + col} />;
+            let el = <i key={act.length} className={font + ' ' + col} />;
             act.push(el);
         }
 
@@ -155,9 +154,9 @@ export default class Ship extends Component {
                 col = 'blue';
             }
             let el = (
-                <span>
+                <span key={stats.length}>
                     {' '}
-                    {s.value} <i className={className + ' ' + col} />
+                    {s.value} <i key={stats.length} className={className + ' ' + col} />
                 </span>
             );
             stats.push(el);
@@ -169,7 +168,7 @@ export default class Ship extends Component {
     render() {
         return (
             <div>
-                <div className='title'>{this.shipInfo.name}</div>
+                <div className="title">{this.shipInfo.name}</div>
                 <div>{this.shipStats}</div>
                 <div>{this.shipActions}</div>
                 <div>{this.shipDial}</div>
