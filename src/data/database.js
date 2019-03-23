@@ -15,7 +15,7 @@ export function load() {
         for (let p of f.ships) {
             let ship = require(`../${p}`);
             ship.statsMap = {};
-            for (let s of ship.stats){
+            for (let s of ship.stats) {
                 ship.statsMap[s.type] = s.value;
             }
             db.factions[f.faction].ships.push(ship);
@@ -30,3 +30,5 @@ export function load() {
         db.upgrades[name.replace('-', '')] = upg;
     }
 }
+
+export var lists = [];

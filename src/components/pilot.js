@@ -50,12 +50,21 @@ export default class Pilot extends Component {
             <div>
                 <div>
                     <span className="pilot-skill">{this.pilot.initiative}</span> {this.pilot.limited === 1 && '•'}{' '}
-                    <span className="title">{this.pilot.name}</span> {this.pilot.caption ? <span className="fluff">({this.pilot.caption})</span> : null} -{' '}
+                    <span className="title">{this.pilot.name}</span>{' '}
+                    {this.pilot.caption ? <span className="fluff">({this.pilot.caption})</span> : null} -{' '}
                     {this.pilot.cost}pts
                 </div>
                 {/* <img src={this.pilot.image} height="400px"></img> */}
                 <p>{this.pilot.ability}</p>
-                {this.pilot.shipAbility ? <p><span className="title">{this.pilot.shipAbility.name}{':'}</span> {this.pilot.shipAbility.text}</p> : null}
+                {this.pilot.shipAbility ? (
+                    <p>
+                        <span className="title">
+                            {this.pilot.shipAbility.name}
+                            {':'}
+                        </span>{' '}
+                        {this.pilot.shipAbility.text}
+                    </p>
+                ) : null}
                 <p className="fluff">{this.pilot.text}</p>
                 <div>{this.slots}</div>
             </div>

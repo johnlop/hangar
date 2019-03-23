@@ -154,13 +154,23 @@ export default class Ship extends Component {
                 col = 'blue';
             }
             let el = (
-                <span key={stats.length}>
+                <span key={stats.length} className={col}>
                     {' '}
-                    {s.value} <i key={stats.length} className={className + ' ' + col} />
+                    <i key={stats.length} className={className} /> <span className="title">{s.value}</span>
                 </span>
             );
             stats.push(el);
         }
+
+        stats.push(
+            <span key={stats.length}>
+                {' '}
+                <i
+                    key={stats.length}
+                    className={'xwing-miniatures-font xwing-miniatures-font-base-' + this.shipInfo.size.toLowerCase()}
+                />
+            </span>,
+        );
 
         return stats;
     }

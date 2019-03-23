@@ -9,10 +9,15 @@ import getQuote from './data/quotes';
 export default class App extends Component {
     constructor() {
         super();
-        database.load();
 
-        this.state = { faction: 'rebelalliance', ships: [{}] };
-        this.shipSeq = 1;
+        database.load();
+        database.lists.push({
+            ships: [],
+        });
+
+        this.state = { faction: 'rebelalliance', ships: [] };
+        this.shipSeq = 0;
+
         this.changeFaction = this.changeFaction.bind(this);
         this.addShip = this.addShip.bind(this);
         this.deleteShip = this.deleteShip.bind(this);
@@ -24,13 +29,13 @@ export default class App extends Component {
     }
 
     addShip() {
-        let s = this.state.ships;
+        let s = database.lists[0].ships;
         s.push({});
         this.setState({ ships: s });
     }
 
     deleteShip(i) {
-        let s = this.state.ships;
+        let s = database.lists[0].ships;
         s.splice(i, 1);
         this.setState({ ships: s });
     }
@@ -45,7 +50,9 @@ export default class App extends Component {
                     </div>
                 </div>
                 <div className="body">
-                    {this.state.ships.map((s, i) => <ShipContainer key={i} k={i} faction={this.state.faction} deleteShip={this.deleteShip} />)}
+                    {this.state.ships.map((s, i) => (
+                        <ShipContainer key={i} k={i} faction={this.state.faction} deleteShip={this.deleteShip} />
+                    ))}
                     <button onClick={this.addShip}>+</button>
                 </div>
                 <div className="footer">
