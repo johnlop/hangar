@@ -33,6 +33,7 @@ export default function getQuote() {
         'I got a problem here. My converter’s running wild.',
         'You’re too low. Pull up!',
         'Cover me, Porkins!',
+        'What about the droid attack on the wookies?',
     ];
 
     let r = Math.floor(Math.random() * (quotes.length + 1));

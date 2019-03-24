@@ -1,6 +1,7 @@
 .app {
   color: white;
   background-color: #000000;
+  font-size: calc(18px);
 }
 
 .header {
@@ -31,13 +32,8 @@
 }
 
 .body {
-  text-align: center;
   min-height: 85vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(18px);
 }
 
 .container{
@@ -47,6 +43,15 @@
   background-color: rgb(30,30,30);
   border: 1px solid #333;
   border-radius: 8px;
+}
+
+.column {
+  flex: 50%;
+  border: 1px solid #333;
+}
+
+.cell {
+  border-bottom: 1px solid #333;
 }
 
 .block{

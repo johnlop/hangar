@@ -4,9 +4,19 @@ import './fonts/xwing-miniatures.css';
 import * as database from './data/database';
 import FactionPicker from './components/factionPicker';
 import ShipContainer from './components/shipContainer';
+import ShipList from './components/shipList';
 import getQuote from './data/quotes';
+import { addShip } from './redux/actions';
+import uuidv1 from 'uuid';
+import { connect } from 'react-redux';
 
-export default class App extends Component {
+function mapDispatchToProps(dispatch) {
+    return {
+        addShip: (ship) => dispatch(addShip(ship)),
+    };
+}
+
+class ConnectedApp extends Component {
     constructor() {
         super();
 
@@ -29,9 +39,7 @@ export default class App extends Component {
     }
 
     addShip() {
-        let s = database.lists[0].ships;
-        s.push({});
-        this.setState({ ships: s });
+        this.props.addShip({ title: 'new ship', id: uuidv1() });
     }
 
     deleteShip(i) {
@@ -50,9 +58,14 @@ export default class App extends Component {
                     </div>
                 </div>
                 <div className="body">
-                    {this.state.ships.map((s, i) => (
-                        <ShipContainer key={i} k={i} faction={this.state.faction} deleteShip={this.deleteShip} />
-                    ))}
+                    <div className="column">
+                        <ShipList />
+                    </div>
+                    <div className="column">
+                        {this.state.ships.map((s, i) => (
+                            <ShipContainer key={i} k={i} faction={this.state.faction} deleteShip={this.deleteShip} />
+                        ))}
+                    </div>
                     <button onClick={this.addShip}>+</button>
                 </div>
                 <div className="footer">
@@ -62,3 +75,10 @@ export default class App extends Component {
         );
     }
 }
+
+const App = connect(
+    null,
+    mapDispatchToProps,
+)(ConnectedApp);
+
+export default App;

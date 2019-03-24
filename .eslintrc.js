@@ -9,6 +9,7 @@ module.exports = {
         sourceType: 'module',  // Allows for the use of imports
     },
     rules:{
-        'react/prop-types': 'off'
+        'react/prop-types': 'off',
+        'no-undef': 'off'
     }
 };

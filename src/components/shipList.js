@@ -1,27 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 
-export default class ShipList extends Component {
-    constructor(props) {
-        super(props);
+const mapStateToProps = (state) => {
+    return { ships: state.ships };
+};
 
-        this.state = {};
-    }
-
-    getShips() {
-        let arr = [];
-
-        for (let s of this.state.ships) {
-            arr.push(<div>{s}</div>);
-        }
-
-        return arr;
-    }
-
-    render() {
-        return (
-            <div>
-                <div>{this.state.ships}</div>
+const ConnectedShipList = ({ ships }) => (
+    <div>
+        {ships.map((el) => (
+            <div className="cell" key={el.id}>
+                {el.title}
             </div>
-        );
-    }
-}
+        ))}
+    </div>
+);
+
+const ShipList = connect(mapStateToProps)(ConnectedShipList);
+
+export default ShipList;
