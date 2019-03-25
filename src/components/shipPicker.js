@@ -6,19 +6,22 @@ export default class ShipPicker extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { faction: props.faction, shipId: 0 };
+        this.state = { ship: props.ship };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.changeModelId = this.changeModelId.bind(this);
     }
 
-    handleChange(event) {
-        this.setState({ shipId: event.target.value });
-        this.props.changeShip(event.target.value);
+    changeModelId(event) {
+        let s = this.state.ship;
+        s.modelId = event.target.value;
+        s.pilotId = 0;
+        this.setState({ ship: s });
+        this.props.updateShip(s);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.faction !== prevProps.faction) {
-            this.setState({ faction: this.props.faction, shipId: 0 });
+        if (this.props.ship !== prevProps.ship) {
+            this.setState({ ship: this.props.ship });
         }
     }
 
@@ -37,14 +40,14 @@ export default class ShipPicker extends Component {
     }
 
     render() {
-        this.shipOptions = this.getShips(this.state.faction);
+        this.shipOptions = this.getShips(this.state.ship.faction);
 
         return (
             <div className="block">
-                <select value={this.state.shipId} onChange={this.handleChange}>
+                <select value={this.state.ship.modelId} onChange={this.changeModelId}>
                     {this.shipOptions}
                 </select>
-                <Ship faction={this.state.faction} shipId={this.state.shipId} />
+                <Ship ship={this.state.ship} />
             </div>
         );
     }

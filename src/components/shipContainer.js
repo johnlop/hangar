@@ -6,32 +6,27 @@ export default class ShipContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { faction: props.faction, shipId: 0, key: props.k, deleteShip: props.deleteShip };
+        this.state = { ship: props.ship };
 
-        this.changeShip = this.changeShip.bind(this);
-        this.deleteShip = this.deleteShip.bind(this);
+        this.updateShip = this.updateShip.bind(this);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.faction !== prevProps.faction) {
-            this.setState({ faction: this.props.faction, shipId: 0 });
+        if (this.props.ship !== prevProps.ship) {
+            this.setState({ ship: this.props.ship });
         }
     }
 
-    changeShip(value) {
-        this.setState({ shipId: value });
-    }
-
-    deleteShip() {
-        this.state.deleteShip(this.state.key);
+    updateShip(value) {
+        this.setState({ ship: value });
+        this.props.updateShip(value);
     }
 
     render() {
         return (
             <div className="container">
-                <ShipPicker faction={this.state.faction} changeShip={this.changeShip} />
-                <PilotPicker faction={this.state.faction} shipId={this.state.shipId} />
-                <button onClick={this.deleteShip}>x</button>
+                <ShipPicker ship={this.state.ship} updateShip={this.updateShip} />
+                <PilotPicker ship={this.state.ship} updateShip={this.updateShip} />
             </div>
         );
     }

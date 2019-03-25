@@ -5,25 +5,17 @@ export default class Ship extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { faction: props.faction, shipId: props.shipId };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.loadInfo(props.faction, props.shipId);
-    }
-
-    handleChange(event) {
-        this.setState({ faction: event.target.value });
+        this.state = { ship: props.ship };
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.faction !== prevProps.faction || this.props.shipId !== prevProps.shipId) {
-            this.setState({ faction: this.props.faction });
-            this.loadInfo(this.props.faction, this.props.shipId);
+        if (this.props.ship !== prevProps.ship) {
+            this.setState({ ship: this.props.ship });
         }
     }
 
-    loadInfo(faction, shipId) {
-        this.shipInfo = database.db.factions[faction].ships[shipId];
+    loadInfo(ship) {
+        this.shipInfo = database.db.factions[ship.faction].ships[ship.modelId];
         this.shipDial = this.getDial();
         this.shipActions = this.getActions();
         this.shipStats = this.getStats();
@@ -32,6 +24,7 @@ export default class Ship extends Component {
     getDial() {
         let dial = [];
         let builder = {};
+
         for (let m of this.shipInfo.dial) {
             let c = m.split('');
             let speed = parseInt(c[0]);
@@ -176,6 +169,8 @@ export default class Ship extends Component {
     }
 
     render() {
+        this.loadInfo(this.state.ship);
+
         return (
             <div>
                 <div className="title">{this.shipInfo.name}</div>

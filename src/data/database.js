@@ -30,5 +30,3 @@ export function load() {
         db.upgrades[name.replace('-', '')] = upg;
     }
 }
-
-export var lists = [];

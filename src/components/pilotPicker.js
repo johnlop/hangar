@@ -6,28 +6,31 @@ export default class PilotPicker extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { faction: props.faction, shipId: props.shipId, pilotId: 0 };
+        this.state = { ship: props.ship };
 
-        this.handleChange = this.handleChange.bind(this);
+        this.changePilotId = this.changePilotId.bind(this);
     }
 
-    handleChange(event) {
-        this.setState({ pilotId: event.target.value });
+    changePilotId(event) {
+        let s = this.state.ship;
+        s.pilotId = event.target.value;
+        this.setState({ ship: s });
+        this.props.updateShip(s);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.faction !== prevProps.faction || this.props.shipId !== prevProps.shipId) {
-            this.setState({ faction: this.props.faction, shipId: this.props.shipId, pilotId: 0 });
+        if (this.props.ship !== prevProps.ship) {
+            this.setState({ ship: this.props.ship });
         }
     }
 
-    getPilots(faction, shipId) {
+    getPilots(ship) {
         let arr = [];
 
-        for (let key in database.db.factions[faction].ships[shipId].pilots) {
+        for (let key in database.db.factions[ship.faction].ships[ship.modelId].pilots) {
             arr.push(
                 <option key={key} value={key}>
-                    {database.db.factions[faction].ships[shipId].pilots[key].name}
+                    {database.db.factions[ship.faction].ships[ship.modelId].pilots[key].name}
                 </option>,
             );
         }
@@ -36,14 +39,14 @@ export default class PilotPicker extends Component {
     }
 
     render() {
-        this.pilotOptions = this.getPilots(this.state.faction, this.state.shipId);
+        this.pilotOptions = this.getPilots(this.state.ship);
 
         return (
             <div className="block">
-                <select value={this.state.pilotId} onChange={this.handleChange}>
+                <select value={this.state.ship.pilotId} onChange={this.changePilotId}>
                     {this.pilotOptions}
                 </select>
-                <Pilot faction={this.state.faction} shipId={this.state.shipId} pilotId={this.state.pilotId} />
+                <Pilot ship={this.state.ship} />
             </div>
         );
     }

@@ -4,48 +4,84 @@ import './fonts/xwing-miniatures.css';
 import * as database from './data/database';
 import FactionPicker from './components/factionPicker';
 import ShipContainer from './components/shipContainer';
-import ShipList from './components/shipList';
+import ShipListItem from './components/shipListItem';
 import getQuote from './data/quotes';
-import { addShip } from './redux/actions';
 import uuidv1 from 'uuid';
-import { connect } from 'react-redux';
 
-function mapDispatchToProps(dispatch) {
-    return {
-        addShip: (ship) => dispatch(addShip(ship)),
-    };
-}
-
-class ConnectedApp extends Component {
+export default class App extends Component {
     constructor() {
         super();
 
         database.load();
-        database.lists.push({
-            ships: [],
-        });
 
-        this.state = { faction: 'rebelalliance', ships: [] };
-        this.shipSeq = 0;
+        let s = {
+            id: uuidv1(),
+            faction: 'rebelalliance',
+            modelId: 0,
+            pilotId: 0,
+        };
+        this.setModelAndPilot(s);
+
+        this.state = {
+            faction: 'rebelalliance',
+            ships: [s],
+            selectedShip: s,
+        };
 
         this.changeFaction = this.changeFaction.bind(this);
         this.addShip = this.addShip.bind(this);
-        this.deleteShip = this.deleteShip.bind(this);
+        this.selectShip = this.selectShip.bind(this);
+        this.updateShip = this.updateShip.bind(this);
     }
 
     changeFaction(value) {
-        this.setState({ faction: value, ships: [] });
-        this.shipSeq = 0;
+        let s = [
+            {
+                id: uuidv1(),
+                faction: value,
+                modelId: 0,
+                pilotId: 0,
+            },
+        ];
+        this.setState({
+            faction: value,
+            ships: s,
+            selectedShip: s[0],
+        });
+    }
+
+    setModelAndPilot(ship) {
+        ship.model = database.db.factions[ship.faction].ships[ship.modelId];
+        ship.pilot = database.db.factions[ship.faction].ships[ship.modelId].pilots[ship.pilotId];
+    }
+
+    updateShip(value) {
+        this.setModelAndPilot(value);
+        let ships = this.state.ships;
+        for (let s in ships) {
+            if (ships[s].id === value.id) {
+                ships[s] = value;
+                break;
+            }
+        }
+        this.setState({ ships: ships });
     }
 
     addShip() {
-        this.props.addShip({ title: 'new ship', id: uuidv1() });
+        let ships = this.state.ships;
+        let ship = {
+            id: uuidv1(),
+            faction: this.state.faction,
+            modelId: 0,
+            pilotId: 0,
+        };
+        this.setModelAndPilot(ship);
+        ships.push(ship);
+        this.setState({ ships: ships, selectedShip: ship });
     }
 
-    deleteShip(i) {
-        let s = database.lists[0].ships;
-        s.splice(i, 1);
-        this.setState({ ships: s });
+    selectShip(value) {
+        this.setState({ selectedShip: value });
     }
 
     render() {
@@ -59,14 +95,16 @@ class ConnectedApp extends Component {
                 </div>
                 <div className="body">
                     <div className="column">
-                        <ShipList />
+                        {this.state.ships.map((el) => (
+                            <ShipListItem key={el.id} ship={el} onItemClick={this.selectShip} />
+                        ))}
+                        <button className="cell" onClick={this.addShip}>
+                            +
+                        </button>
                     </div>
                     <div className="column">
-                        {this.state.ships.map((s, i) => (
-                            <ShipContainer key={i} k={i} faction={this.state.faction} deleteShip={this.deleteShip} />
-                        ))}
+                        <ShipContainer ship={this.state.selectedShip} updateShip={this.updateShip} />
                     </div>
-                    <button onClick={this.addShip}>+</button>
                 </div>
                 <div className="footer">
                     <span className="fluff">{getQuote()}</span>
@@ -75,10 +113,3 @@ class ConnectedApp extends Component {
         );
     }
 }
-
-const App = connect(
-    null,
-    mapDispatchToProps,
-)(ConnectedApp);
-
-export default App;
