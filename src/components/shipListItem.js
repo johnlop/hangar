@@ -13,10 +13,34 @@ export default class ShipListItem extends Component {
         this.props.onItemClick(this.props.ship);
     }
 
+    getInstalledUpgrades() {
+        let arr = [];
+
+        for (let s of this.state.ship.pilot.slots) {
+            let upg = this.state.ship.upgrades[s.toLowerCase().replace(/ /g, '')].name;
+            if (!upg.startsWith('No')) {
+                arr.push(upg);
+            }
+        }
+
+        return <span>{arr.join(', ')}</span>;
+    }
+
     render() {
+        let font = 'xwing-miniatures-ship xwing-miniatures-ship-' + this.state.ship.model.xws;
+        let upg = this.getInstalledUpgrades();
+
         return (
-            <div className="cell" onClick={this.handleClick}>
-                {this.state.ship.pilot.name} ({this.state.ship.model.name})
+            <div className={'cell ' + this.props.className} onClick={this.handleClick}>
+                <div className="column">
+                    <i className={font} />
+                </div>
+                <div className="column">
+                    <div className="title">
+                        {this.state.ship.pilot.name} ({this.state.ship.model.name}) - {this.state.ship.totalCost}pts
+                    </div>
+                    <div className="fluff">{upg}</div>
+                </div>
             </div>
         );
     }

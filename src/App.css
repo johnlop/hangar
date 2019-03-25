@@ -1,7 +1,7 @@
 .app {
   color: white;
   background-color: #000000;
-  font-size: calc(18px);
+  font-size: 18px;
 }
 
 .header {
@@ -12,12 +12,11 @@
   justify-content: center;
   font-size: 24px;
   background-color: rgb(30,30,30);
-  border: 1px solid #333;
 }
 
 .footer{
-  margin-top: 5vh;
-  padding: 20px;
+  height: 20px;
+  padding: 10px;
   background-color: rgb(30,30,30);
   font-size: 12px;
   text-align: center;
@@ -32,7 +31,7 @@
 }
 
 .body {
-  min-height: 85vh;
+  height: calc(100vh - 80px);
   display: flex;
 }
 
@@ -41,21 +40,27 @@
   margin: 10px;
   display: flex;
   background-color: rgb(30,30,30);
-  border: 1px solid #333;
   border-radius: 8px;
 }
 
 .column {
   flex: 50%;
-  border: 1px solid #333;
+}
+.column.thin {
+  flex: 10%;
 }
 
 .cell {
+  padding: 10px;
+  display: flex;
   border-bottom: 1px solid #333;
+}
+.selected {
+  background-color: #333;
 }
 
 .block{
-  width: 400px;
+  /* width: 400px; */
 }
 
 select {

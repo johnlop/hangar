@@ -9,12 +9,18 @@ export default class PilotPicker extends Component {
         this.state = { ship: props.ship };
 
         this.changePilotId = this.changePilotId.bind(this);
+        this.updateShip = this.updateShip.bind(this);
     }
 
     changePilotId(event) {
         let s = this.state.ship;
         s.pilotId = event.target.value;
-        this.setState({ ship: s });
+        //this.setState({ ship: s });
+        this.props.updateShip(s);
+    }
+
+    updateShip(s) {
+        //this.setState({ ship: s });
         this.props.updateShip(s);
     }
 
@@ -46,7 +52,7 @@ export default class PilotPicker extends Component {
                 <select value={this.state.ship.pilotId} onChange={this.changePilotId}>
                     {this.pilotOptions}
                 </select>
-                <Pilot ship={this.state.ship} />
+                <Pilot ship={this.state.ship} updateShip={this.updateShip} />
             </div>
         );
     }

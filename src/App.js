@@ -7,6 +7,7 @@ import ShipContainer from './components/shipContainer';
 import ShipListItem from './components/shipListItem';
 import getQuote from './data/quotes';
 import uuidv1 from 'uuid';
+import { getUpgradeCost } from './helpers/dbHelper';
 
 export default class App extends Component {
     constructor() {
@@ -14,14 +15,7 @@ export default class App extends Component {
 
         database.load();
 
-        let s = {
-            id: uuidv1(),
-            faction: 'rebelalliance',
-            modelId: 0,
-            pilotId: 0,
-        };
-        this.setModelAndPilot(s);
-
+        let s = this.generateNewShip('rebelalliance');
         this.state = {
             faction: 'rebelalliance',
             ships: [s],
@@ -41,6 +35,8 @@ export default class App extends Component {
                 faction: value,
                 modelId: 0,
                 pilotId: 0,
+                upgradeIds: {},
+                upgrades: {},
             },
         ];
         this.setState({
@@ -50,13 +46,37 @@ export default class App extends Component {
         });
     }
 
-    setModelAndPilot(ship) {
+    generateNewShip(faction) {
+        let s = {
+            id: uuidv1(),
+            faction: faction,
+            modelId: 0,
+            pilotId: 0,
+            upgradeIds: {},
+            upgrades: {},
+        };
+        this.processShipData(s);
+        return s;
+    }
+
+    processShipData(ship) {
         ship.model = database.db.factions[ship.faction].ships[ship.modelId];
         ship.pilot = database.db.factions[ship.faction].ships[ship.modelId].pilots[ship.pilotId];
+
+        ship.totalCost = ship.pilot.cost;
+
+        for (let s of ship.pilot.slots) {
+            let ss = s.toLowerCase().replace(/ /g, '');
+            if (ship.upgradeIds[ss] === undefined) {
+                ship.upgradeIds[ss] = 0;
+            }
+            ship.upgrades[ss] = database.db.upgrades[ss][ship.upgradeIds[ss]];
+            ship.totalCost += getUpgradeCost(ship, ship.upgrades[ss]);
+        }
     }
 
     updateShip(value) {
-        this.setModelAndPilot(value);
+        this.processShipData(value);
         let ships = this.state.ships;
         for (let s in ships) {
             if (ships[s].id === value.id) {
@@ -69,13 +89,7 @@ export default class App extends Component {
 
     addShip() {
         let ships = this.state.ships;
-        let ship = {
-            id: uuidv1(),
-            faction: this.state.faction,
-            modelId: 0,
-            pilotId: 0,
-        };
-        this.setModelAndPilot(ship);
+        let ship = this.generateNewShip(this.state.faction);
         ships.push(ship);
         this.setState({ ships: ships, selectedShip: ship });
     }
@@ -94,9 +108,14 @@ export default class App extends Component {
                     </div>
                 </div>
                 <div className="body">
-                    <div className="column">
+                    <div className="column thin">
                         {this.state.ships.map((el) => (
-                            <ShipListItem key={el.id} ship={el} onItemClick={this.selectShip} />
+                            <ShipListItem
+                                key={el.id}
+                                ship={el}
+                                onItemClick={this.selectShip}
+                                className={this.state.selectedShip.id === el.id && 'selected'}
+                            />
                         ))}
                         <button className="cell" onClick={this.addShip}>
                             +

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as database from '../data/database';
 import UpgradePicker from './upgradePicker';
 
 export default class Pilot extends Component {
@@ -7,6 +6,8 @@ export default class Pilot extends Component {
         super(props);
 
         this.state = { ship: props.ship };
+
+        this.changeUpgradeId = this.changeUpgradeId.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -15,18 +16,20 @@ export default class Pilot extends Component {
         }
     }
 
-    getInfo(ship) {
-        this.ship = database.db.factions[ship.faction].ships[ship.modelId];
-        this.pilot = database.db.factions[ship.faction].ships[ship.modelId].pilots[ship.pilotId];
-        this.slots = this.getSlots();
+    changeUpgradeId(type, id, upgrade) {
+        let s = this.state.ship;
+        s.upgradeIds[type] = id;
+        s.upgrades[type] = upgrade;
+        //this.setState({ ship: s });
+        this.props.updateShip(s);
     }
 
     getSlots() {
         let arr = [];
         let i = 0;
-        for (let s of this.pilot.slots) {
+        for (let s of this.state.ship.pilot.slots) {
             let type = s.toLowerCase().replace(/ /g, '');
-            arr.push(<UpgradePicker key={i} type={type} pilot={this.pilot} ship={this.ship} />);
+            arr.push(<UpgradePicker key={i} type={type} ship={this.state.ship} changeUpgrade={this.changeUpgradeId} />);
             i++;
         }
 
@@ -34,28 +37,31 @@ export default class Pilot extends Component {
     }
 
     render() {
-        this.getInfo(this.state.ship);
+        this.slots = this.getSlots();
 
         return (
             <div>
                 <div>
-                    <span className="pilot-skill">{this.pilot.initiative}</span> {this.pilot.limited === 1 && '•'}{' '}
-                    <span className="title">{this.pilot.name}</span>{' '}
-                    {this.pilot.caption ? <span className="fluff">({this.pilot.caption})</span> : null} -{' '}
-                    {this.pilot.cost}pts
+                    <span className="pilot-skill">{this.state.ship.pilot.initiative}</span>{' '}
+                    {this.state.ship.pilot.limited === 1 && '•'}{' '}
+                    <span className="title">{this.state.ship.pilot.name}</span>{' '}
+                    {this.state.ship.pilot.caption ? (
+                        <span className="fluff">({this.state.ship.pilot.caption})</span>
+                    ) : null}{' '}
+                    - {this.state.ship.pilot.cost}pts
                 </div>
                 {/* <img src={this.pilot.image} height="400px"></img> */}
-                <p>{this.pilot.ability}</p>
-                {this.pilot.shipAbility ? (
+                <p>{this.state.ship.pilot.ability}</p>
+                {this.state.ship.pilot.shipAbility ? (
                     <p>
                         <span className="title">
-                            {this.pilot.shipAbility.name}
+                            {this.state.ship.pilot.shipAbility.name}
                             {':'}
                         </span>{' '}
-                        {this.pilot.shipAbility.text}
+                        {this.state.ship.pilot.shipAbility.text}
                     </p>
                 ) : null}
-                <p className="fluff">{this.pilot.text}</p>
+                <p className="fluff">{this.state.ship.pilot.text}</p>
                 <div>{this.slots}</div>
             </div>
         );

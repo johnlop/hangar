@@ -18,7 +18,7 @@ export default class ShipContainer extends Component {
     }
 
     updateShip(value) {
-        this.setState({ ship: value });
+        //this.setState({ ship: value });
         this.props.updateShip(value);
     }
 

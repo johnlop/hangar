@@ -1,48 +1,39 @@
 import React, { Component } from 'react';
 import * as database from '../data/database';
+import { getUpgradeCost } from '../helpers/dbHelper';
 
 export default class UpgradePicker extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { ship: props.ship, pilot: props.pilot, type: props.type, upgradeId: 0 };
+        this.state = { ship: props.ship, type: props.type };
 
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
-        this.setState({ upgradeId: event.target.value });
+        let s = this.state.ship;
+        s.upgradeIds[this.state.type] = event.target.value;
+        s.upgrades[this.state.type] = database.db.upgrades[this.state.type][event.target.value];
+        //this.setState({ ship: s });
+        this.props.changeUpgrade(this.state.type, event.target.value, s.upgrades[this.state.type]);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.type !== prevProps.type) {
-            this.setState({ type: this.props.type, upgradeId: 0 });
+        if (this.props.ship !== prevProps.ship || this.props.type !== prevProps.type) {
+            this.setState({ ship: this.props.ship, type: this.props.type });
         }
     }
 
     getUpgrades(type) {
         let arr = [];
 
-        for (let key in database.db.upgrades[type]) {
-            let upg = database.db.upgrades[type][key];
-            let cost = 999;
-            if (upg.cost) {
-                if (upg.cost.value !== undefined) {
-                    cost = upg.cost.value;
-                } else if (upg.cost.variable) {
-                    let stat = upg.cost.variable;
-                    if (stat === 'initiative') {
-                        cost = upg.cost.values[this.state.pilot.initiative];
-                    } else if (stat === 'size') {
-                        cost = upg.cost.values[this.state.ship.size];
-                    } else {
-                        cost = upg.cost.values[this.state.ship.statsMap[stat]];
-                    }
-                }
-            }
+        for (let id in database.db.upgrades[type]) {
+            let upg = database.db.upgrades[type][id];
+            let cost = getUpgradeCost(this.state.ship, upg);
             arr.push(
-                <option key={key} value={key}>
-                    {`${database.db.upgrades[type][key].name} - ${cost}pts`}
+                <option key={id} value={id}>
+                    {`${database.db.upgrades[type][id].name} - ${cost}pts`}
                 </option>,
             );
         }
@@ -52,14 +43,17 @@ export default class UpgradePicker extends Component {
 
     render() {
         this.upgradeOptions = this.getUpgrades(this.state.type);
-        this.upgrade = database.db.upgrades[this.state.type][this.state.upgradeId];
 
         return (
             <div>
-                <select value={this.state.upgradeId} onChange={this.handleChange}>
+                <select value={this.state.ship.upgradeIds[this.state.type]} onChange={this.handleChange}>
                     {this.upgradeOptions}
                 </select>
-                <p>{this.upgrade ? this.upgrade.sides[0].ability : null}</p>
+                <p>
+                    {this.state.ship.upgrades[this.state.type]
+                        ? this.state.ship.upgrades[this.state.type].sides[0].ability
+                        : null}
+                </p>
             </div>
         );
     }
