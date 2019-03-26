@@ -31,11 +31,11 @@ export default class ShipListItem extends Component {
         let upg = this.getInstalledUpgrades();
 
         return (
-            <div className={'cell ' + this.props.className} onClick={this.handleClick}>
-                <div className="column">
+            <div className={'row ' + this.props.className} onClick={this.handleClick}>
+                <div className="ship-icon cell">
                     <i className={font} />
                 </div>
-                <div className="column">
+                <div className="cell">
                     <div className="title">
                         {this.state.ship.pilot.name} ({this.state.ship.model.name}) - {this.state.ship.totalCost}pts
                     </div>

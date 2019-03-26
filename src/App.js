@@ -28,21 +28,12 @@ export default class App extends Component {
         this.updateShip = this.updateShip.bind(this);
     }
 
-    changeFaction(value) {
-        let s = [
-            {
-                id: uuidv1(),
-                faction: value,
-                modelId: 0,
-                pilotId: 0,
-                upgradeIds: {},
-                upgrades: {},
-            },
-        ];
+    changeFaction(faction) {
+        let s = this.generateNewShip(faction);
         this.setState({
-            faction: value,
-            ships: s,
-            selectedShip: s[0],
+            faction: faction,
+            ships: [s],
+            selectedShip: s,
         });
     }
 
@@ -66,12 +57,12 @@ export default class App extends Component {
         ship.totalCost = ship.pilot.cost;
 
         for (let s of ship.pilot.slots) {
-            let ss = s.toLowerCase().replace(/ /g, '');
-            if (ship.upgradeIds[ss] === undefined) {
-                ship.upgradeIds[ss] = 0;
+            let type = s.toLowerCase().replace(/ /g, '');
+            if (ship.upgradeIds[type] === undefined) {
+                ship.upgradeIds[type] = 0;
             }
-            ship.upgrades[ss] = database.db.upgrades[ss][ship.upgradeIds[ss]];
-            ship.totalCost += getUpgradeCost(ship, ship.upgrades[ss]);
+            ship.upgrades[type] = database.db.upgrades[type][ship.upgradeIds[type]];
+            ship.totalCost += getUpgradeCost(ship, ship.upgrades[type]);
         }
     }
 
@@ -108,7 +99,7 @@ export default class App extends Component {
                     </div>
                 </div>
                 <div className="body">
-                    <div className="column thin">
+                    <div className="list">
                         {this.state.ships.map((el) => (
                             <ShipListItem
                                 key={el.id}
@@ -118,10 +109,10 @@ export default class App extends Component {
                             />
                         ))}
                         <button className="cell" onClick={this.addShip}>
-                            +
+                            ADD SHIP
                         </button>
                     </div>
-                    <div className="column">
+                    <div className="">
                         <ShipContainer ship={this.state.selectedShip} updateShip={this.updateShip} />
                     </div>
                 </div>

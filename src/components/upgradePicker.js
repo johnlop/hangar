@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as database from '../data/database';
 import { getUpgradeCost } from '../helpers/dbHelper';
+import Select from 'react-select';
 
 export default class UpgradePicker extends Component {
     constructor(props) {
@@ -35,6 +36,7 @@ export default class UpgradePicker extends Component {
                 <option key={id} value={id}>
                     {`${database.db.upgrades[type][id].name} - ${cost}pts`}
                 </option>,
+                // { value: id, label: `${database.db.upgrades[type][id].name} - ${cost}pts` },
             );
         }
 
@@ -46,6 +48,13 @@ export default class UpgradePicker extends Component {
 
         return (
             <div>
+                {/* <Select
+                    classNamePrefix="select"
+                    value={this.state.ship.upgradeIds[this.state.type]}
+                    options={this.upgradeOptions}
+                    onChange={this.handleChange}
+                /> */}
+
                 <select value={this.state.ship.upgradeIds[this.state.type]} onChange={this.handleChange}>
                     {this.upgradeOptions}
                 </select>

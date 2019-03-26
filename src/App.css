@@ -1,7 +1,10 @@
+@import '../node_modules/roboto-fontface/css/roboto/roboto-fontface.css';
+
 .app {
-  color: white;
-  background-color: #000000;
-  font-size: 18px;
+  color: #cdcdcd;
+  font-size: 16px;
+  font-family: 'Roboto';
+  font-weight: 300;
 }
 
 .header {
@@ -11,15 +14,17 @@
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  background-color: rgb(30,30,30);
+  background-color: #222222;
+  background-image: -webkit-linear-gradient(top,#282828,#191919);
 }
 
 .footer{
   height: 20px;
   padding: 10px;
-  background-color: rgb(30,30,30);
-  font-size: 12px;
+  background-color: #222222;
+  background-image: -webkit-linear-gradient(bottom,#282828,#191919);
   text-align: center;
+  font-size: 90%;
 }
 
 .logo {
@@ -33,50 +38,56 @@
 .body {
   height: calc(100vh - 80px);
   display: flex;
+  background-color: #262626;
 }
 
 .container{
   padding: 10px;
   margin: 10px;
   display: flex;
-  background-color: rgb(30,30,30);
-  border-radius: 8px;
 }
 
-.column {
-  flex: 50%;
+.ship-icon {
+  font-size: 28px;
 }
-.column.thin {
-  flex: 10%;
+
+.list {
+  width: 500px;
+  background-color: #222222;
+  background-image: -webkit-linear-gradient(left,#282828,#222222);
+}
+
+.row {
+  display: flex;
 }
 
 .cell {
-  padding: 10px;
-  display: flex;
-  border-bottom: 1px solid #333;
+  padding: 5px;
 }
 .selected {
-  background-color: #333;
+  background-color: rgba(80,80,80,.5);
 }
 
 .block{
-  /* width: 400px; */
+  max-width: 500px;
 }
 
 select {
   margin: 5px;
   padding: 5px;
   width: 300px;
-  background-color: #000000;
-  color: #ffffff;
-  border: 1px solid #333;
+  background-color: #2a2a2a;
+  color: #cdcdcd;
+  border: 1px solid #3e3e3e;
+  border-radius: 4px;
 }
 
 button {
-  background-color: #000000;
-  color: #ffffff;
-  border: 1px solid #333;
   padding: 10px;
+  background-color: #2a2a2a;
+  color: #cdcdcd;
+  border: 1px solid #3e3e3e;
+  border-radius: 4px;
 }
 
 select:focus, button:focus{
@@ -91,34 +102,35 @@ p{
 
 .fluff {
   font-style: italic;
+  font-size: 90%;
 }
 
 .title {
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .white {
-  color: #ffffff;
+  color: #ddd;
 }
 
 .blue {
-  color: rgb(110, 149, 255);
+  color: #2989ff;
 }
 
 .red {
-  color: rgb(255, 66, 66);
+  color: rgb(255, 75, 75);
 }
 
 .green {
-  color: #66FF66;
+  color: rgb(75, 192, 75);
 }
 
 .yellow {
-  color: rgb(255, 218, 96);
+  color: rgb(245, 201, 58);
 }
 
 .pilot-skill {
   font-size: 24px;
   font-weight: bold;
-  color: rgb(255, 218, 96);
+  color: rgb(245, 201, 58);
 }

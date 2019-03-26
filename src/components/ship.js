@@ -173,7 +173,10 @@ export default class Ship extends Component {
 
         return (
             <div>
-                <div className="title">{this.shipInfo.name}</div>
+                <div>
+                    <span className="title">{this.shipInfo.name}</span>
+                    <span className="fluff"> ({this.shipInfo.size})</span>
+                </div>
                 <div>{this.shipStats}</div>
                 <div>{this.shipActions}</div>
                 <div>{this.shipDial}</div>
