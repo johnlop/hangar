@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import UpgradePicker from './upgradePicker';
+import ModalImage from 'react-modal-image';
 
 export default class Pilot extends Component {
     constructor(props) {
@@ -49,8 +50,12 @@ export default class Pilot extends Component {
                         <span className="fluff">({this.state.ship.pilot.caption})</span>
                     ) : null}{' '}
                     - {this.state.ship.pilot.cost}pts
+                    <ModalImage
+                        className="card-image"
+                        small={this.state.ship.model.icon}
+                        large={this.state.ship.pilot.image}
+                    />
                 </div>
-                {/* <img src={this.pilot.image} height="400px"></img> */}
                 <p>{this.state.ship.pilot.ability}</p>
                 {this.state.ship.pilot.shipAbility ? (
                     <p>

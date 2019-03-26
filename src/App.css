@@ -14,17 +14,17 @@
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  background-color: #222222;
-  background-image: -webkit-linear-gradient(top,#282828,#191919);
+  background-color: #111;
+  /* background-image: -webkit-linear-gradient(top,#282828,#191919); */
 }
 
 .footer{
   height: 20px;
   padding: 10px;
-  background-color: #222222;
-  background-image: -webkit-linear-gradient(bottom,#282828,#191919);
   text-align: center;
   font-size: 90%;
+  background-color: #111;
+  /* background-image: -webkit-linear-gradient(top,#282828,#191919); */
 }
 
 .logo {
@@ -132,5 +132,10 @@ p{
 .pilot-skill {
   font-size: 24px;
   font-weight: bold;
-  color: rgb(245, 201, 58);
+  color: rgb(230, 145, 19);
+}
+
+.card-image {
+  display: inline-flex;
+  height: 30px;
 }

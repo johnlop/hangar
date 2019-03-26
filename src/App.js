@@ -5,6 +5,7 @@ import * as database from './data/database';
 import FactionPicker from './components/factionPicker';
 import ShipContainer from './components/shipContainer';
 import ShipListItem from './components/shipListItem';
+import SquadListItem from './components/squadListItem';
 import getQuote from './data/quotes';
 import uuidv1 from 'uuid';
 import { getUpgradeCost } from './helpers/dbHelper';
@@ -15,14 +16,17 @@ export default class App extends Component {
 
         database.load();
 
-        let s = this.generateNewShip('rebelalliance');
+        let s = this.generateNewSquad('rebelalliance');
         this.state = {
             faction: 'rebelalliance',
-            ships: [s],
-            selectedShip: s,
+            squads: [s],
+            selectedSquad: s,
+            selectedShip: s.ships[0],
         };
 
         this.changeFaction = this.changeFaction.bind(this);
+        this.addSquad = this.addSquad.bind(this);
+        this.selectSquad = this.selectSquad.bind(this);
         this.addShip = this.addShip.bind(this);
         this.selectShip = this.selectShip.bind(this);
         this.updateShip = this.updateShip.bind(this);
@@ -35,6 +39,15 @@ export default class App extends Component {
             ships: [s],
             selectedShip: s,
         });
+    }
+
+    generateNewSquad(faction) {
+        let s = {
+            id: uuidv1(),
+            faction: faction,
+            ships: [this.generateNewShip(faction)],
+        };
+        return s;
     }
 
     generateNewShip(faction) {
@@ -78,11 +91,22 @@ export default class App extends Component {
         this.setState({ ships: ships });
     }
 
+    addSquad() {
+        let squads = this.state.squads;
+        let squad = this.generateNewSquad(this.state.faction);
+        squads.push(squad);
+        this.setState({ squads: squads, selectedSquad: squad, selectedShip: squad.ships[0] });
+    }
+
+    selectSquad(value) {
+        this.setState({ selectedSquad: value, selectedShip: value.ships[0] });
+    }
+
     addShip() {
-        let ships = this.state.ships;
-        let ship = this.generateNewShip(this.state.faction);
-        ships.push(ship);
-        this.setState({ ships: ships, selectedShip: ship });
+        let squad = this.state.selectedSquad;
+        let ship = this.generateNewShip(squad.faction);
+        squad.ships.push(ship);
+        this.setState({ selectedSquad: squad, selectedShip: ship });
     }
 
     selectShip(value) {
@@ -100,7 +124,20 @@ export default class App extends Component {
                 </div>
                 <div className="body">
                     <div className="list">
-                        {this.state.ships.map((el) => (
+                        {this.state.squads.map((el) => (
+                            <SquadListItem
+                                key={el.id}
+                                squad={el}
+                                onItemClick={this.selectSquad}
+                                className={this.state.selectedSquad.id === el.id && 'selected'}
+                            />
+                        ))}
+                        <button className="cell" onClick={this.addSquad}>
+                            ADD SQUAD
+                        </button>
+                    </div>
+                    <div className="list">
+                        {this.state.selectedSquad.ships.map((el) => (
                             <ShipListItem
                                 key={el.id}
                                 ship={el}

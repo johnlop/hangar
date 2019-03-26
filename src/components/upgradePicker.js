@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import * as database from '../data/database';
 import { getUpgradeCost } from '../helpers/dbHelper';
-import Select from 'react-select';
+// import Select from 'react-select';
 
 export default class UpgradePicker extends Component {
     constructor(props) {
