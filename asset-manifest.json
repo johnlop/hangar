@@ -1,0 +1,18 @@
+{
+  "main.css": "/hangar/static/css/main.1658f67c.chunk.css",
+  "main.js": "/hangar/static/js/main.7ee2808c.chunk.js",
+  "main.js.map": "/hangar/static/js/main.7ee2808c.chunk.js.map",
+  "runtime~main.js": "/hangar/static/js/runtime~main.e1c584e4.js",
+  "runtime~main.js.map": "/hangar/static/js/runtime~main.e1c584e4.js.map",
+  "static/css/2.699e4287.chunk.css": "/hangar/static/css/2.699e4287.chunk.css",
+  "static/js/2.5c3613b9.chunk.js": "/hangar/static/js/2.5c3613b9.chunk.js",
+  "static/js/2.5c3613b9.chunk.js.map": "/hangar/static/js/2.5c3613b9.chunk.js.map",
+  "index.html": "/hangar/index.html",
+  "precache-manifest.71c99ce158b1847b0d0b05feaeaa5b2e.js": "/hangar/precache-manifest.71c99ce158b1847b0d0b05feaeaa5b2e.js",
+  "service-worker.js": "/hangar/service-worker.js",
+  "static/css/2.699e4287.chunk.css.map": "/hangar/static/css/2.699e4287.chunk.css.map",
+  "static/css/main.1658f67c.chunk.css.map": "/hangar/static/css/main.1658f67c.chunk.css.map",
+  "static/media/App.css": "/hangar/static/media/Roboto-ThinItalic.8a96edbb.woff",
+  "static/media/xwing-miniatures-ships.ttf": "/hangar/static/media/xwing-miniatures-ships.d38c27a0.ttf",
+  "static/media/xwing-miniatures.ttf": "/hangar/static/media/xwing-miniatures.8a149fcc.ttf"
+}
