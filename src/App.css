@@ -36,7 +36,7 @@
 }
 
 .body {
-  height: calc(100vh - 80px);
+  height: calc(100vh - 40px);
   display: flex;
   background-color: #262626;
 }
@@ -49,6 +49,11 @@
 
 .ship-icon {
   font-size: 28px;
+}
+
+.squad-icon img {
+  height: 28px;
+  margin: 5px;
 }
 
 .list {
@@ -84,6 +89,14 @@ select {
 
 button {
   padding: 10px;
+  background-color: #2a2a2a;
+  color: #cdcdcd;
+  border: 1px solid #3e3e3e;
+  border-radius: 4px;
+}
+
+input {
+  padding: 5px;
   background-color: #2a2a2a;
   color: #cdcdcd;
   border: 1px solid #3e3e3e;

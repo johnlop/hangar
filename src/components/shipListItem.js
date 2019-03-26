@@ -37,7 +37,7 @@ export default class ShipListItem extends Component {
                 </div>
                 <div className="cell">
                     <div className="title">
-                        {this.state.ship.pilot.name} ({this.state.ship.model.name}) - {this.state.ship.totalCost}pts
+                        {this.state.ship.pilot.name} ({this.state.ship.model.name}) - {this.state.ship.cost}pts
                     </div>
                     <div className="fluff">{upg}</div>
                 </div>
