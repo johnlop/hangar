@@ -30,14 +30,59 @@ export default class UpgradePicker extends Component {
         let arr = [];
 
         for (let id in database.db.upgrades[type]) {
+            let good = true;
             let upg = database.db.upgrades[type][id];
-            let cost = getUpgradeCost(this.state.ship, upg);
-            arr.push(
-                <option key={id} value={id}>
-                    {`${database.db.upgrades[type][id].name} - ${cost}pts`}
-                </option>,
-                // { value: id, label: `${database.db.upgrades[type][id].name} - ${cost}pts` },
-            );
+            if (upg.restrictions) {
+                for (let r of upg.restrictions) {
+                    if (r['factions']) {
+                        if (!r['factions'].includes(this.state.ship.faction.name)) {
+                            good = false;
+                            break;
+                        }
+                    } else if (r['sizes']) {
+                        if (!r['sizes'].includes(this.state.ship.model.size)) {
+                            good = false;
+                            break;
+                        }
+                    } else if (r['ships']) {
+                        if (!r['ships'].includes(this.state.ship.model.xws)) {
+                            good = false;
+                            break;
+                        }
+                    } else if (r['action']) {
+                        let foundIt = false;
+                        for (let a of this.state.ship.model.actions) {
+                            if (a.type === r['action'].type && a.difficulty === r['action'].difficulty) {
+                                foundIt = true;
+                                break;
+                            }
+                        }
+                        good = foundIt;
+                        break;
+                    } else if (r['equipped']) {
+                        let foundIt = false;
+                        for (let e of r['equipped']) {
+                            let installedUpgrade = this.state.ship.upgrades[e.toLowerCase().replace(/ /g, '')];
+                            if (installedUpgrade && !installedUpgrade.name.startsWith('No')) {
+                                foundIt = true;
+                                break;
+                            }
+                            foundIt = false;
+                        }
+                        good = foundIt;
+                        break;
+                    }
+                }
+            }
+            if (good) {
+                let cost = getUpgradeCost(this.state.ship, upg);
+                arr.push(
+                    <option key={id} value={id}>
+                        {`${upg.name} - ${cost}pts`}
+                    </option>,
+                    // { value: id, label: `${upg.name} - ${cost}pts` },
+                );
+            }
         }
 
         return arr;

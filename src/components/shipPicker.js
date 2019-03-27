@@ -15,6 +15,8 @@ export default class ShipPicker extends Component {
         let s = this.state.ship;
         s.modelId = event.target.value;
         s.pilotId = 0;
+        s.upgradeIds = {};
+        s.upgrades = {};
         this.setState({ ship: s });
         this.props.updateShip(s);
     }
@@ -40,7 +42,7 @@ export default class ShipPicker extends Component {
     }
 
     render() {
-        this.shipOptions = this.getShips(this.state.ship.faction);
+        this.shipOptions = this.getShips(this.state.ship.faction.xws);
 
         return (
             <div className="block">

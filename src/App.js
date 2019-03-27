@@ -16,9 +16,10 @@ export default class App extends Component {
 
         database.load();
 
-        let s = this.generateNewSquad('rebelalliance');
+        let faction = { xws: 'rebelalliance', name: database.db.factions['rebelalliance'].name };
+        let s = this.generateNewSquad(faction);
         this.state = {
-            faction: 'rebelalliance',
+            faction: faction,
             squads: [s],
             selectedSquad: s,
             selectedShip: s.ships[0],
@@ -64,8 +65,8 @@ export default class App extends Component {
     }
 
     processShipData(ship) {
-        ship.model = database.db.factions[ship.faction].ships[ship.modelId];
-        ship.pilot = database.db.factions[ship.faction].ships[ship.modelId].pilots[ship.pilotId];
+        ship.model = database.db.factions[ship.faction.xws].ships[ship.modelId];
+        ship.pilot = database.db.factions[ship.faction.xws].ships[ship.modelId].pilots[ship.pilotId];
 
         ship.cost = ship.pilot.cost;
 

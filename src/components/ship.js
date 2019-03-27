@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as database from '../data/database';
 
 export default class Ship extends Component {
     constructor(props) {
@@ -14,8 +13,7 @@ export default class Ship extends Component {
         }
     }
 
-    loadInfo(ship) {
-        this.shipInfo = database.db.factions[ship.faction].ships[ship.modelId];
+    loadInfo() {
         this.shipDial = this.getDial();
         this.shipActions = this.getActions();
         this.shipStats = this.getStats();
@@ -25,7 +23,7 @@ export default class Ship extends Component {
         let dial = [];
         let builder = {};
 
-        for (let m of this.shipInfo.dial) {
+        for (let m of this.state.ship.model.dial) {
             let c = m.split('');
             let speed = parseInt(c[0]);
             let col = 'white';
@@ -114,7 +112,7 @@ export default class Ship extends Component {
 
     getActions() {
         let act = [];
-        for (let a of this.shipInfo.actions) {
+        for (let a of this.state.ship.model.actions) {
             let col = 'white';
             if (a.difficulty === 'Red') {
                 col = 'red';
@@ -139,7 +137,7 @@ export default class Ship extends Component {
     getStats() {
         let stats = [];
 
-        for (let s of this.shipInfo.stats) {
+        for (let s of this.state.ship.model.stats) {
             let col = 'white';
             let className = 'xwing-miniatures-font xwing-miniatures-font-';
             if (s.type === 'attack') {
@@ -169,7 +167,7 @@ export default class Ship extends Component {
         //         {' '}
         //         <i
         //             key={stats.length}
-        //             className={'xwing-miniatures-font xwing-miniatures-font-base-' + this.shipInfo.size.toLowerCase()}
+        //             className={'xwing-miniatures-font xwing-miniatures-font-base-' + this.state.ship.model.size.toLowerCase()}
         //         />
         //     </span>,
         // );
@@ -178,13 +176,13 @@ export default class Ship extends Component {
     }
 
     render() {
-        this.loadInfo(this.state.ship);
+        this.loadInfo();
 
         return (
             <div>
                 <div>
-                    <span className="title">{this.shipInfo.name}</span>
-                    <span className="fluff"> ({this.shipInfo.size})</span>
+                    <span className="title">{this.state.ship.model.name}</span>
+                    <span className="fluff"> ({this.state.ship.model.size})</span>
                 </div>
                 <div>{this.shipStats}</div>
                 <div>{this.shipActions}</div>

@@ -33,10 +33,10 @@ export default class PilotPicker extends Component {
     getPilots(ship) {
         let arr = [];
 
-        for (let key in database.db.factions[ship.faction].ships[ship.modelId].pilots) {
+        for (let key in database.db.factions[ship.faction.xws].ships[ship.modelId].pilots) {
             arr.push(
                 <option key={key} value={key}>
-                    {database.db.factions[ship.faction].ships[ship.modelId].pilots[key].name}
+                    {database.db.factions[ship.faction.xws].ships[ship.modelId].pilots[key].name}
                 </option>,
             );
         }

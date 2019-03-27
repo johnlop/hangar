@@ -5,15 +5,16 @@ export default class FactionPicker extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = { faction: props.faction };
 
         this.handleChange = this.handleChange.bind(this);
         this.factionOptions = this.getFactions();
     }
 
     handleChange(event) {
-        this.setState({ faction: event.target.value }, this.changeFaction);
-        this.props.changeFaction(event.target.value);
+        let faction = { xws: event.target.value, name: database.db.factions[event.target.value].name };
+        this.setState({ faction: faction });
+        this.props.changeFaction(faction);
     }
 
     getFactions() {
@@ -32,7 +33,7 @@ export default class FactionPicker extends Component {
 
     render() {
         return (
-            <select value={this.state.faction} onChange={this.handleChange}>
+            <select value={this.state.faction.xws} onChange={this.handleChange}>
                 {this.factionOptions}
             </select>
         );

@@ -18,8 +18,8 @@ export default class SquadListItem extends Component {
             <div className={'row ' + this.props.className} onClick={this.handleClick}>
                 <div className="squad-icon cell">
                     <img
-                        src={`${process.env.PUBLIC_URL}/img/${this.state.squad.faction}.png`}
-                        alt={this.state.squad.faction}
+                        src={`${process.env.PUBLIC_URL}/img/${this.state.squad.faction.xws}.png`}
+                        alt={this.state.squad.faction.name}
                     />
                 </div>
                 <div className="cell">
