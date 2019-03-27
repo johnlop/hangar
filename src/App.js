@@ -169,7 +169,7 @@ export default class App extends Component {
                             ADD SHIP
                         </button>
                     </div>
-                    <div className="list">
+                    <div>
                         <ShipContainer ship={this.state.selectedShip} updateShip={this.updateShip} />
                     </div>
                 </div>

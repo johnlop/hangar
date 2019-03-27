@@ -120,8 +120,17 @@ export default class Ship extends Component {
                 col = 'red';
             }
             let font = 'xwing-miniatures-font xwing-miniatures-font-' + a.type.toLowerCase().replace(/ /g, '');
-            let el = <i key={act.length} className={font + ' ' + col} />;
-            act.push(el);
+            act.push(<i key={act.length} className={font + ' ' + col} />);
+
+            if (a.linked) {
+                act.push(<i key={act.length} className={'xwing-miniatures-font xwing-miniatures-font-linked'} />);
+                col = 'white';
+                if (a.linked.difficulty === 'Red') {
+                    col = 'red';
+                }
+                font = 'xwing-miniatures-font xwing-miniatures-font-' + a.linked.type.toLowerCase().replace(/ /g, '');
+                act.push(<i key={act.length} className={font + ' ' + col} />);
+            }
         }
 
         return act;
@@ -155,15 +164,15 @@ export default class Ship extends Component {
             stats.push(el);
         }
 
-        stats.push(
-            <span key={stats.length}>
-                {' '}
-                <i
-                    key={stats.length}
-                    className={'xwing-miniatures-font xwing-miniatures-font-base-' + this.shipInfo.size.toLowerCase()}
-                />
-            </span>,
-        );
+        // stats.push(
+        //     <span key={stats.length}>
+        //         {' '}
+        //         <i
+        //             key={stats.length}
+        //             className={'xwing-miniatures-font xwing-miniatures-font-base-' + this.shipInfo.size.toLowerCase()}
+        //         />
+        //     </span>,
+        // );
 
         return stats;
     }

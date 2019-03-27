@@ -77,7 +77,7 @@
   max-width: 500px;
 }
 
-select {
+select, input {
   margin: 5px;
   padding: 5px;
   width: 300px;
@@ -89,14 +89,6 @@ select {
 
 button {
   padding: 10px;
-  background-color: #2a2a2a;
-  color: #cdcdcd;
-  border: 1px solid #3e3e3e;
-  border-radius: 4px;
-}
-
-input {
-  padding: 5px;
   background-color: #2a2a2a;
   color: #cdcdcd;
   border: 1px solid #3e3e3e;
