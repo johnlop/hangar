@@ -17,10 +17,10 @@ export default class Pilot extends Component {
         }
     }
 
-    changeUpgradeId(type, id, upgrade) {
+    changeUpgradeId(slotId, id, upgrade) {
         let s = this.state.ship;
-        s.upgradeIds[type] = id;
-        s.upgrades[type] = upgrade;
+        s.upgradeIds[slotId] = id;
+        s.upgrades[slotId] = upgrade;
         //this.setState({ ship: s });
         this.props.updateShip(s);
     }
@@ -30,7 +30,15 @@ export default class Pilot extends Component {
         let i = 0;
         for (let s of this.state.ship.pilot.slots) {
             let type = s.toLowerCase().replace(/ /g, '');
-            arr.push(<UpgradePicker key={i} type={type} ship={this.state.ship} changeUpgrade={this.changeUpgradeId} />);
+            arr.push(
+                <UpgradePicker
+                    key={i}
+                    type={type}
+                    slotId={i}
+                    ship={this.state.ship}
+                    changeUpgrade={this.changeUpgradeId}
+                />,
+            );
             i++;
         }
 

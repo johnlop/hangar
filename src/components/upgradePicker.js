@@ -7,28 +7,29 @@ export default class UpgradePicker extends Component {
     constructor(props) {
         super(props);
 
-        this.state = { ship: props.ship, type: props.type };
+        this.state = { ship: props.ship, slotId: props.slotId };
 
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(event) {
         let s = this.state.ship;
-        s.upgradeIds[this.state.type] = event.target.value;
-        s.upgrades[this.state.type] = database.db.upgrades[this.state.type][event.target.value];
+        s.upgradeIds[this.state.slotId] = event.target.value;
+        s.upgrades[this.state.slotId] =
+            database.db.upgrades[this.state.ship.upgrades[this.state.slotId].sides[0].type][event.target.value];
         //this.setState({ ship: s });
-        this.props.changeUpgrade(this.state.type, event.target.value, s.upgrades[this.state.type]);
+        this.props.changeUpgrade(this.state.slotId, event.target.value, s.upgrades[this.state.slotId]);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.ship !== prevProps.ship || this.props.type !== prevProps.type) {
-            this.setState({ ship: this.props.ship, type: this.props.type });
+        if (this.props.ship !== prevProps.ship || this.props.slotId !== prevProps.slotId) {
+            this.setState({ ship: this.props.ship, slotId: this.props.slotId });
         }
     }
 
-    getUpgrades(type) {
+    getUpgrades(t) {
         let arr = [];
-
+        let type = t.toLowerCase().replace(/ /g, '');
         for (let id in database.db.upgrades[type]) {
             let good = true;
             let upg = database.db.upgrades[type][id];
@@ -89,7 +90,7 @@ export default class UpgradePicker extends Component {
     }
 
     render() {
-        this.upgradeOptions = this.getUpgrades(this.state.type);
+        this.upgradeOptions = this.getUpgrades(this.state.ship.upgrades[this.state.slotId].sides[0].type);
 
         return (
             <div>
@@ -100,12 +101,12 @@ export default class UpgradePicker extends Component {
                     onChange={this.handleChange}
                 /> */}
 
-                <select value={this.state.ship.upgradeIds[this.state.type]} onChange={this.handleChange}>
+                <select value={this.state.ship.upgradeIds[this.state.slotId]} onChange={this.handleChange}>
                     {this.upgradeOptions}
                 </select>
                 <p>
-                    {this.state.ship.upgrades[this.state.type]
-                        ? this.state.ship.upgrades[this.state.type].sides[0].ability
+                    {this.state.ship.upgrades[this.state.slotId]
+                        ? this.state.ship.upgrades[this.state.slotId].sides[0].ability
                         : null}
                 </p>
             </div>

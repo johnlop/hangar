@@ -15,8 +15,8 @@ export default class ShipPicker extends Component {
         let s = this.state.ship;
         s.modelId = event.target.value;
         s.pilotId = 0;
-        s.upgradeIds = {};
-        s.upgrades = {};
+        // s.upgradeIds = {};
+        // s.upgrades = {};
         this.setState({ ship: s });
         this.props.updateShip(s);
     }

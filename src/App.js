@@ -8,7 +8,7 @@ import ShipListItem from './components/shipListItem';
 import SquadListItem from './components/squadListItem';
 import getQuote from './data/quotes';
 import uuidv1 from 'uuid';
-import { getUpgradeCost } from './helpers/dbHelper';
+import { generateNewShip, processShipData } from './helpers/dbHelper';
 
 export default class App extends Component {
     constructor() {
@@ -39,7 +39,7 @@ export default class App extends Component {
     }
 
     generateNewSquad(faction) {
-        let ship = this.generateNewShip(faction);
+        let ship = generateNewShip(faction);
         let s = {
             id: uuidv1(),
             faction: faction,
@@ -51,35 +51,6 @@ export default class App extends Component {
         return s;
     }
 
-    generateNewShip(faction) {
-        let s = {
-            id: uuidv1(),
-            faction: faction,
-            modelId: 0,
-            pilotId: 0,
-            upgradeIds: {},
-            upgrades: {},
-        };
-        this.processShipData(s);
-        return s;
-    }
-
-    processShipData(ship) {
-        ship.model = database.db.factions[ship.faction.xws].ships[ship.modelId];
-        ship.pilot = database.db.factions[ship.faction.xws].ships[ship.modelId].pilots[ship.pilotId];
-
-        ship.cost = ship.pilot.cost;
-
-        for (let s of ship.pilot.slots) {
-            let type = s.toLowerCase().replace(/ /g, '');
-            if (ship.upgradeIds[type] === undefined) {
-                ship.upgradeIds[type] = 0;
-            }
-            ship.upgrades[type] = database.db.upgrades[type][ship.upgradeIds[type]];
-            ship.cost += getUpgradeCost(ship, ship.upgrades[type]);
-        }
-    }
-
     changeSquadName(event) {
         let s = this.state.selectedSquad;
         s.name = event.target.value;
@@ -87,7 +58,7 @@ export default class App extends Component {
     }
 
     updateShip(ship) {
-        this.processShipData(ship);
+        processShipData(ship);
         let squad = this.state.selectedSquad;
         squad.cost = 0;
         for (let s in squad.ships) {
@@ -112,7 +83,7 @@ export default class App extends Component {
 
     addShip() {
         let squad = this.state.selectedSquad;
-        let ship = this.generateNewShip(squad.faction);
+        let ship = generateNewShip(squad.faction);
         squad.ships.push(ship);
         squad.cost = 0;
         for (let s in squad.ships) {

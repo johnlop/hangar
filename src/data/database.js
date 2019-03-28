@@ -26,7 +26,8 @@ export function load() {
     for (let u of manifest.upgrades) {
         let upg = require(`../${u}`);
         let name = u.split('/')[2].replace('.json', '');
-        upg.unshift({ name: 'No ' + name, cost: { value: 0 }, sides: [{}] });
-        db.upgrades[name.replace('-', '')] = upg;
+        let type = name.replace('-', '');
+        upg.unshift({ name: 'No ' + name, cost: { value: 0 }, sides: [{ type: type }] });
+        db.upgrades[type] = upg;
     }
 }
