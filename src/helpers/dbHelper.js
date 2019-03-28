@@ -24,13 +24,26 @@ export function generateNewShip(faction) {
     let ship = {
         id: uuidv1(),
         faction: faction,
-        modelId: 0,
-        pilotId: 0,
-        upgradeIds: [],
-        upgrades: [],
     };
+
+    setDefaultPilotModel(ship);
+    setDefaultUpgrades(ship);
+    updateShipData(ship);
+
+    return ship;
+}
+
+export function setDefaultPilotModel(ship) {
+    ship.modelId = 0;
+    ship.pilotId = 0;
+
     ship.model = database.db.factions[ship.faction.xws].ships[ship.modelId];
     ship.pilot = database.db.factions[ship.faction.xws].ships[ship.modelId].pilots[ship.pilotId];
+}
+
+export function setDefaultUpgrades(ship) {
+    ship.upgradeIds = [];
+    ship.upgrades = [];
 
     for (let s of ship.pilot.slots) {
         let type = s.toLowerCase().replace(/ /g, '');
@@ -38,15 +51,20 @@ export function generateNewShip(faction) {
         let upg = database.db.upgrades[type][0];
         ship.upgrades.push(upg);
     }
-
-    processShipData(ship);
-
-    return ship;
 }
 
-export function processShipData(ship) {
-    ship.model = database.db.factions[ship.faction.xws].ships[ship.modelId];
-    ship.pilot = database.db.factions[ship.faction.xws].ships[ship.modelId].pilots[ship.pilotId];
+export function updateShipData(ship) {
+    let newModel = database.db.factions[ship.faction.xws].ships[ship.modelId];
+    let newPilot = database.db.factions[ship.faction.xws].ships[ship.modelId].pilots[ship.pilotId];
+
+    if (newModel.xws !== ship.model.xws || newPilot.xws !== ship.pilot.xws) {
+        ship.model = newModel;
+        ship.pilot = newPilot;
+        setDefaultUpgrades(ship);
+    } else {
+        ship.model = newModel;
+        ship.pilot = newPilot;
+    }
 
     ship.cost = ship.pilot.cost;
 

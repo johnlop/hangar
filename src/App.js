@@ -8,7 +8,7 @@ import ShipListItem from './components/shipListItem';
 import SquadListItem from './components/squadListItem';
 import getQuote from './data/quotes';
 import uuidv1 from 'uuid';
-import { generateNewShip, processShipData } from './helpers/dbHelper';
+import { generateNewShip, updateShipData } from './helpers/dbHelper';
 
 export default class App extends Component {
     constructor() {
@@ -58,7 +58,7 @@ export default class App extends Component {
     }
 
     updateShip(ship) {
-        processShipData(ship);
+        updateShipData(ship);
         let squad = this.state.selectedSquad;
         squad.cost = 0;
         for (let s in squad.ships) {
