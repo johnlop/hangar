@@ -28,6 +28,7 @@ export function generateNewShip(faction) {
 
     setDefaultPilotModel(ship);
     setDefaultUpgrades(ship);
+    setDefaultStats(ship);
     updateShipData(ship);
 
     return ship;
@@ -53,6 +54,21 @@ export function setDefaultUpgrades(ship) {
     }
 }
 
+export function setDefaultStats(ship) {
+    ship.stats = ship.model.stats.slice(0);
+
+    if (ship.pilot.force) {
+        ship.stats.push({ type: 'force', ...ship.pilot.force });
+    }
+    if (ship.pilot.charges) {
+        ship.stats.push({ type: 'charges', ...ship.pilot.charges });
+    }
+
+    ship.dial = ship.model.dial.slice(0);
+
+    ship.actions = ship.model.actions.slice(0);
+}
+
 export function updateShipData(ship) {
     let newModel = database.db.factions[ship.faction.xws].ships[ship.modelId];
     let newPilot = database.db.factions[ship.faction.xws].ships[ship.modelId].pilots[ship.pilotId];
@@ -61,6 +77,7 @@ export function updateShipData(ship) {
         ship.model = newModel;
         ship.pilot = newPilot;
         setDefaultUpgrades(ship);
+        setDefaultStats(ship);
     } else {
         ship.model = newModel;
         ship.pilot = newPilot;

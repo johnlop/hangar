@@ -5,6 +5,7 @@
   font-size: 16px;
   font-family: 'Roboto';
   font-weight: 300;
+  height: 100vh;
 }
 
 .header {
@@ -45,21 +46,14 @@
   padding: 10px;
   margin: 10px;
   display: flex;
-}
-
-.ship-icon {
-  font-size: 28px;
-}
-
-.squad-icon img {
-  height: 28px;
-  margin: 5px;
+  height: 100%;
 }
 
 .list {
   width: 500px;
   background-color: #222222;
   background-image: -webkit-linear-gradient(left,#282828,#222222);
+  height: 100%;
 }
 
 .row {
@@ -69,6 +63,7 @@
 .cell {
   padding: 5px;
 }
+
 .selected {
   background-color: rgba(80,80,80,.5);
 }
@@ -97,6 +92,15 @@ button {
 
 select:focus, button:focus{
   outline:0;
+}
+
+.ship-icon {
+  font-size: 28px;
+}
+
+.squad-icon img {
+  height: 28px;
+  margin: 5px;
 }
 
 p{
@@ -132,6 +136,10 @@ p{
 
 .yellow {
   color: rgb(245, 201, 58);
+}
+
+.purple {
+  color: rgb(185, 129, 183);
 }
 
 .pilot-skill {

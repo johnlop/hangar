@@ -23,9 +23,9 @@ export function load() {
             db.factions[f.faction].ships.push(ship);
 
             for (let p of ship.pilots) {
-                p.ability = insertIcons(p.ability);
+                p.ability = getTextWithIcons(p.ability);
                 if (p.shipAbility) {
-                    p.shipAbility.text = insertIcons(p.shipAbility.text);
+                    p.shipAbility.text = getTextWithIcons(p.shipAbility.text);
                 }
             }
         }
@@ -41,28 +41,28 @@ export function load() {
 
         for (let up of upg) {
             if (up.sides[0].ability) {
-                up.sides[0].ability = insertIcons(up.sides[0].ability);
+                up.sides[0].ability = getTextWithIcons(up.sides[0].ability);
             }
         }
     }
 }
 
 function isEven(value) {
-    if (value % 2 == 0) return true;
+    if (value % 2 === 0) return true;
     else return false;
 }
 
-function insertIcons(text) {
+function getTextWithIcons(text) {
     if (!text) return text;
 
     let arr = [];
     let sp = text.split(/\[|\]/g);
     for (let i in sp) {
         if (isEven(i)) {
-            arr.push(<span>{sp[i]}</span>);
+            arr.push(<span key={i}>{sp[i]}</span>);
         } else {
             let c = 'xwing-miniatures-font xwing-miniatures-font-' + sp[i].toLowerCase().replace(/ /g, '');
-            arr.push(<i className={c} />);
+            arr.push(<i key={i} className={c} />);
         }
     }
     return arr;

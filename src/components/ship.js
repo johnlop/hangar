@@ -23,7 +23,7 @@ export default class Ship extends Component {
         let dial = [];
         let builder = {};
 
-        for (let m of this.state.ship.model.dial) {
+        for (let m of this.state.ship.dial) {
             let c = m.split('');
             let speed = parseInt(c[0]);
             let col = 'white';
@@ -112,7 +112,7 @@ export default class Ship extends Component {
 
     getActions() {
         let act = [];
-        for (let a of this.state.ship.model.actions) {
+        for (let a of this.state.ship.actions) {
             let col = 'white';
             if (a.difficulty === 'Red') {
                 col = 'red';
@@ -137,7 +137,7 @@ export default class Ship extends Component {
     getStats() {
         let stats = [];
 
-        for (let s of this.state.ship.model.stats) {
+        for (let s of this.state.ship.stats) {
             let col = 'white';
             let className = 'xwing-miniatures-font xwing-miniatures-font-';
             if (s.type === 'attack') {
@@ -152,11 +152,18 @@ export default class Ship extends Component {
             } else if (s.type === 'shields') {
                 className += 'shield';
                 col = 'blue';
+            } else if (s.type === 'force') {
+                className += 'forcecharge';
+                col = 'purple';
+            } else if (s.type === 'charges') {
+                className += 'charge';
+                col = 'yellow';
             }
             let el = (
                 <span key={stats.length} className={col}>
                     {' '}
-                    <i key={stats.length} className={className} /> <span className="title">{s.value}</span>
+                    <i className={className} /> <span className="title">{s.value}</span>
+                    {s.recovers && <i className="xwing-miniatures-font xwing-miniatures-font-recurring" />}
                 </span>
             );
             stats.push(el);

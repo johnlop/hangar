@@ -105,11 +105,13 @@ export default class UpgradePicker extends Component {
                 <select value={this.state.ship.upgradeIds[this.state.slotId]} onChange={this.handleChange}>
                     {this.upgradeOptions}
                 </select>
-                <p>
-                    {this.state.ship.upgrades[this.state.slotId]
-                        ? this.state.ship.upgrades[this.state.slotId].sides[0].ability
-                        : null}
-                </p>
+                <p>{this.state.ship.upgrades[this.state.slotId].sides[0].ability}</p>
+                {this.state.ship.upgrades[this.state.slotId].sides[1] ? (
+                    <p>
+                        <span className="title">Back:</span>{' '}
+                        {this.state.ship.upgrades[this.state.slotId].sides[1].ability}
+                    </p>
+                ) : null}
             </div>
         );
     }
