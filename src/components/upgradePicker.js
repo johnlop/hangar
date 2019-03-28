@@ -13,10 +13,10 @@ export default class UpgradePicker extends Component {
     }
 
     handleChange(event) {
+        let type = this.state.ship.pilot.slots[this.state.slotId].toLowerCase().replace(/ /g, '');
         let s = this.state.ship;
         s.upgradeIds[this.state.slotId] = event.target.value;
-        s.upgrades[this.state.slotId] =
-            database.db.upgrades[this.state.ship.upgrades[this.state.slotId].sides[0].type][event.target.value];
+        s.upgrades[this.state.slotId] = database.db.upgrades[type][event.target.value];
         //this.setState({ ship: s });
         this.props.changeUpgrade(this.state.slotId, event.target.value, s.upgrades[this.state.slotId]);
     }
@@ -27,9 +27,9 @@ export default class UpgradePicker extends Component {
         }
     }
 
-    getUpgrades(t) {
+    getUpgrades(type) {
         let arr = [];
-        let type = t.toLowerCase().replace(/ /g, '');
+
         for (let id in database.db.upgrades[type]) {
             let good = true;
             let upg = database.db.upgrades[type][id];
@@ -90,7 +90,8 @@ export default class UpgradePicker extends Component {
     }
 
     render() {
-        this.upgradeOptions = this.getUpgrades(this.state.ship.upgrades[this.state.slotId].sides[0].type);
+        let type = this.state.ship.pilot.slots[this.state.slotId].toLowerCase().replace(/ /g, '');
+        this.upgradeOptions = this.getUpgrades(type);
 
         return (
             <div>

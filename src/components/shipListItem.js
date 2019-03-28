@@ -16,12 +16,12 @@ export default class ShipListItem extends Component {
     getInstalledUpgrades() {
         let arr = [];
 
-        // for (let s of this.state.ship.pilot.slots) {
-        //     let upg = this.state.ship.upgrades[s.toLowerCase().replace(/ /g, '')].name;
-        //     if (!upg.startsWith('No')) {
-        //         arr.push(upg);
-        //     }
-        // }
+        for (let u of this.state.ship.upgrades) {
+            let upg = u.name;
+            if (!upg.startsWith('No')) {
+                arr.push(upg);
+            }
+        }
 
         return <span>{arr.join(', ')}</span>;
     }
