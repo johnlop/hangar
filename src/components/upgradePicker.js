@@ -106,6 +106,7 @@ export default class UpgradePicker extends Component {
                     {this.upgradeOptions}
                 </select>
                 <p>{this.state.ship.upgrades[this.state.slotId].sides[0].ability}</p>
+                <p className="fluff">{this.state.ship.upgrades[this.state.slotId].sides[0].text}</p>
                 {this.state.ship.upgrades[this.state.slotId].sides[1] ? (
                     <p>
                         <span className="title">Back:</span>{' '}

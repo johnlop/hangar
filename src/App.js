@@ -109,12 +109,15 @@ export default class App extends Component {
         }
         squad.ships.splice(idx, 1);
         squad.cost -= ship.cost;
-        this.setState({ selectedSquad: squad, selectedShip: squad.ships[0] });
+        let selected = null;
+        if (squad.ships.length > 0) {
+            selected = squad.ships[0];
+        }
+        this.setState({ selectedSquad: squad, selectedShip: selected });
     }
 
     copyShip(ship) {
-        let newShip = JSON.parse(JSON.stringify(ship));
-        newShip.id = uuidv1();
+        let newShip = generateNewShip(ship.faction, ship.modelId, ship.pilotId, ship.upgradeIds.splice(0));
         let squad = this.state.selectedSquad;
         squad.ships.push(newShip);
         squad.cost += newShip.cost;
@@ -154,23 +157,27 @@ export default class App extends Component {
                                 />
                             </div>
                         </div>
-                        {this.state.selectedSquad.ships.map((el) => (
-                            <ShipListItem
-                                key={el.id}
-                                ship={el}
-                                onItemClick={this.selectShip}
-                                copyShip={this.copyShip}
-                                deleteShip={this.deleteShip}
-                                className={this.state.selectedShip.id === el.id && 'selected'}
-                            />
-                        ))}
+                        {this.state.selectedSquad.ships.length
+                            ? this.state.selectedSquad.ships.map((el) => (
+                                  <ShipListItem
+                                      key={el.id}
+                                      ship={el}
+                                      onItemClick={this.selectShip}
+                                      copyShip={this.copyShip}
+                                      deleteShip={this.deleteShip}
+                                      className={this.state.selectedShip.id === el.id && 'selected'}
+                                  />
+                              ))
+                            : null}
                         <button className="cell" onClick={this.addShip}>
                             ADD SHIP
                         </button>
                     </div>
-                    <div>
-                        <ShipContainer ship={this.state.selectedShip} updateShip={this.updateShip} />
-                    </div>
+                    {this.state.selectedShip ? (
+                        <div>
+                            <ShipContainer ship={this.state.selectedShip} updateShip={this.updateShip} />
+                        </div>
+                    ) : null}
                 </div>
                 <div className="footer">
                     <span className="fluff">{getQuote()}</span>

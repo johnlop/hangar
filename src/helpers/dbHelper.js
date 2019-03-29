@@ -20,41 +20,44 @@ export function getUpgradeCost(ship, upgrade) {
     return cost;
 }
 
-export function generateNewShip(faction) {
+export function generateNewShip(faction, modelId = 0, pilotId = 0, upgradesIds = []) {
     let ship = {
         id: uuidv1(),
         faction: faction,
     };
 
-    setDefaultPilotModel(ship);
-    setDefaultUpgrades(ship);
-    setDefaultStats(ship);
+    setDefaultPilotModel(ship, modelId, pilotId);
+    setDefaultUpgrades(ship, upgradesIds);
+    setStats(ship);
     updateShipData(ship);
 
     return ship;
 }
 
-export function setDefaultPilotModel(ship) {
-    ship.modelId = 0;
-    ship.pilotId = 0;
+export function setDefaultPilotModel(ship, modelId = 0, pilotId = 0) {
+    ship.modelId = modelId;
+    ship.pilotId = pilotId;
 
     ship.model = database.db.factions[ship.faction.xws].ships[ship.modelId];
     ship.pilot = database.db.factions[ship.faction.xws].ships[ship.modelId].pilots[ship.pilotId];
 }
 
-export function setDefaultUpgrades(ship) {
-    ship.upgradeIds = [];
+export function setDefaultUpgrades(ship, upgradesIds = []) {
+    ship.upgradeIds = upgradesIds;
     ship.upgrades = [];
 
-    for (let s of ship.pilot.slots) {
+    for (let i in ship.pilot.slots) {
+        let s = ship.pilot.slots[i];
         let type = s.toLowerCase().replace(/ /g, '');
-        ship.upgradeIds.push(0);
-        let upg = database.db.upgrades[type][0];
+        if (ship.upgradeIds[i] === undefined) {
+            ship.upgradeIds.push(0);
+        }
+        let upg = database.db.upgrades[type][ship.upgradeIds[i]];
         ship.upgrades.push(upg);
     }
 }
 
-export function setDefaultStats(ship) {
+export function setStats(ship) {
     ship.stats = ship.model.stats.slice(0);
 
     if (ship.pilot.force) {
@@ -67,6 +70,25 @@ export function setDefaultStats(ship) {
     ship.dial = ship.model.dial.slice(0);
 
     ship.actions = ship.model.actions.slice(0);
+
+    for (let u of ship.upgrades) {
+        for (let s of u.sides) {
+            if (s.grants) {
+                for (let g of s.grants) {
+                    if (g.type === 'action') {
+                        ship.actions.push(g.value);
+                    } else if (g.type === 'stat') {
+                        for (let st of ship.stats) {
+                            if (st.type === g.value) {
+                                st.value += g.amount;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 export function updateShipData(ship) {
@@ -77,11 +99,11 @@ export function updateShipData(ship) {
         ship.model = newModel;
         ship.pilot = newPilot;
         setDefaultUpgrades(ship);
-        setDefaultStats(ship);
     } else {
         ship.model = newModel;
         ship.pilot = newPilot;
     }
+    setStats(ship);
 
     ship.cost = ship.pilot.cost;
 
