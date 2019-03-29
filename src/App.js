@@ -31,6 +31,8 @@ export default class App extends Component {
         this.addShip = this.addShip.bind(this);
         this.selectShip = this.selectShip.bind(this);
         this.updateShip = this.updateShip.bind(this);
+        this.deleteShip = this.deleteShip.bind(this);
+        this.copyShip = this.copyShip.bind(this);
         this.changeSquadName = this.changeSquadName.bind(this);
     }
 
@@ -96,6 +98,29 @@ export default class App extends Component {
         this.setState({ selectedShip: ship });
     }
 
+    deleteShip(ship) {
+        let squad = this.state.selectedSquad;
+        let idx = 0;
+        for (let i in squad.ships) {
+            if (squad.ships[i].id === ship.id) {
+                idx = i;
+                break;
+            }
+        }
+        squad.ships.splice(idx, 1);
+        squad.cost -= ship.cost;
+        this.setState({ selectedSquad: squad, selectedShip: squad.ships[0] });
+    }
+
+    copyShip(ship) {
+        let newShip = JSON.parse(JSON.stringify(ship));
+        newShip.id = uuidv1();
+        let squad = this.state.selectedSquad;
+        squad.ships.push(newShip);
+        squad.cost += newShip.cost;
+        this.setState({ selectedSquad: squad, selectedShip: newShip });
+    }
+
     render() {
         return (
             <div className="app">
@@ -134,6 +159,8 @@ export default class App extends Component {
                                 key={el.id}
                                 ship={el}
                                 onItemClick={this.selectShip}
+                                copyShip={this.copyShip}
+                                deleteShip={this.deleteShip}
                                 className={this.state.selectedShip.id === el.id && 'selected'}
                             />
                         ))}

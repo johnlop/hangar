@@ -7,10 +7,20 @@ export default class ShipListItem extends Component {
         this.state = { ship: props.ship };
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleCopy = this.handleCopy.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleClick() {
         this.props.onItemClick(this.props.ship);
+    }
+
+    handleCopy() {
+        this.props.copyShip(this.props.ship);
+    }
+
+    handleDelete() {
+        this.props.deleteShip(this.props.ship);
     }
 
     getInstalledUpgrades() {
@@ -40,6 +50,10 @@ export default class ShipListItem extends Component {
                         {this.state.ship.pilot.name} ({this.state.ship.model.name}) - {this.state.ship.cost}pts
                     </div>
                     <div className="fluff">{upg}</div>
+                </div>
+                <div className="cell">
+                    <button onClick={this.handleCopy}>Copy</button>
+                    <button onClick={this.handleDelete}>X</button>
                 </div>
             </div>
         );
