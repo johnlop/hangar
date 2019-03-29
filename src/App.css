@@ -1,4 +1,5 @@
 @import '../node_modules/roboto-fontface/css/roboto/roboto-fontface.css';
+@import '../node_modules/xwing-miniatures-font/dist/xwing-miniatures.css';
 
 .app {
   color: #cdcdcd;

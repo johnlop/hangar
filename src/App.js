@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import './fonts/xwing-miniatures.css';
 import * as database from './data/database';
 import FactionPicker from './components/factionPicker';
 import ShipContainer from './components/shipContainer';
