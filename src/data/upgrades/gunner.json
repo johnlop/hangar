@@ -36,7 +36,7 @@
     "restrictions": [
       { "factions": ["Scum and Villainy"], "names": ["Darth Vader"] }
     ],
-    "hyperspace": false
+    "hyperspace": true
   },
   {
     "name": "Bistan",
@@ -112,7 +112,7 @@
         "ffg": 320
       }
     ],
-    "cost": { "value": 18 },
+    "cost": { "value": 14 },
     "restrictions": [{ "factions": ["Rebel Alliance"] }],
     "hyperspace": false
   },
@@ -134,7 +134,7 @@
     ],
     "cost": { "value": 9 },
     "restrictions": [{ "factions": ["Galactic Empire"] }],
-    "hyperspace": false
+    "hyperspace": true
   },
   {
     "name": "Greedo",
@@ -306,7 +306,7 @@
         "ffg": 281
       }
     ],
-    "cost": { "value": 6 },
+    "cost": { "value": 8 },
     "restrictions": [{ "action": { "type": "Rotate Arc" } }],
     "hyperspace": true
   },
@@ -378,6 +378,7 @@
         "type": "Gunner",
         "slots": ["Gunner"],
         "ability": "While another friendly ship performs a primary attack, if the defender is in your firing arc, you may spend 1 [Charge]. If you do, the attacker rolls 1 additional die, to a maximum of 4. During the System Phase, you may gain 1 disarm token to recover 1 [Charge].",
+        "charges": { "value": 1, "recovers": 0 },
         "image": "https://sb-cdn.fantasyflightgames.com/card_images/en/a532c1de311e8d0a288af8232495a007.png",
         "artwork": "https://sb-cdn.fantasyflightgames.com/card_art/8461a9f5c79195b802e8b04da922809f.jpg",
         "ffg": 553
@@ -405,5 +406,23 @@
     "restrictions": [{ "factions": ["Galactic Republic"] }],
     "cost": { "value": 3 },
     "hyperspace": true
+  },
+  {
+    "name": "Ahsoka Tano",
+    "sides": [
+      {
+        "ffg": 615,
+        "title": "Ahsoka Tano",
+        "artwork": "https://sb-cdn.fantasyflightgames.com/card_art/f37eb1e56dc1928bfcd53e4eb95a01ae.jpg",
+        "image": "https://sb-cdn.fantasyflightgames.com/card_images/en/bdc101788f827aeaf2f50a513b59aa7e.png",
+        "ability": "After you execute a maneuver, you may spend 1 [Force] and choose a friendly ship at range 1-3 in your firing arc. If you do, it may perform a red [Focus] action, even while stressed.",
+        "slots": ["Gunner"],
+        "type": "Gunner"
+      }
+    ],
+    "cost": { "value": 12 },
+    "limited": 1,
+    "hyperspace": true,
+    "xws": "ahsokatano"
   }
 ]

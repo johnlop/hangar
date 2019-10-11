@@ -51,7 +51,7 @@
       "slots": ["Talent", "Crew", "Astromech", "Modification", "Title"],
       "artwork": "https://sb-cdn.fantasyflightgames.com/card_art/Card_art_XW_P_40.jpg",
       "ffg": 40,
-      "hyperspace": false
+      "hyperspace": true
     },
     {
       "name": "AP-5",
@@ -73,7 +73,7 @@
       "slots": ["Talent", "Crew", "Astromech", "Modification", "Title"],
       "artwork": "https://sb-cdn.fantasyflightgames.com/card_art/Card_art_XW_P_41.jpg",
       "ffg": 41,
-      "hyperspace": false
+      "hyperspace": true
     },
     {
       "name": "Ezra Bridger",
@@ -82,7 +82,7 @@
       "limited": 1,
       "cost": 42,
       "xws": "ezrabridger-sheathipedeclassshuttle",
-      "ability": "While you defend or perform an attack, if you are stressed, you may spend 1 [Force] to change up to 2 of your [Focus] results to [Evade] /[Hit] results.",
+      "ability": "While you defend or perform an attack, if you are stressed, you may spend 1 [Force] to change up to 2 of your [Focus] results to [Evade]/[Hit] results.",
       "image": "https://sb-cdn.fantasyflightgames.com/card_images/Card_Pilot_39.png",
       "force": { "value": 1, "recovers": 1, "side": ["light"] },
       "shipAbility": {
@@ -92,7 +92,7 @@
       "slots": ["Crew", "Astromech", "Modification", "Title", "Force Power"],
       "artwork": "https://sb-cdn.fantasyflightgames.com/card_art/Card_art_XW_P_39.jpg",
       "ffg": 39,
-      "hyperspace": false
+      "hyperspace": true
     },
     {
       "name": "Fenn Rau",
@@ -110,7 +110,7 @@
       "slots": ["Talent", "Crew", "Astromech", "Modification", "Title"],
       "artwork": "https://sb-cdn.fantasyflightgames.com/card_art/Card_art_XW_P_38.jpg",
       "ffg": 38,
-      "hyperspace": false
+      "hyperspace": true
     }
   ]
 }
