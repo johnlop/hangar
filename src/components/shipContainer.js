@@ -1,33 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ShipPicker from './shipPicker';
 import PilotPicker from './pilotPicker';
 
-export default class ShipContainer extends Component {
-    constructor(props) {
-        super(props);
+const ShipContainer = ({ ship, updateShip }) => {
+    return (
+        <div className="container">
+            <ShipPicker ship={ship} updateShip={updateShip} />
+            <PilotPicker ship={ship} updateShip={updateShip} />
+        </div>
+    );
+};
 
-        this.state = { ship: props.ship };
-
-        this.updateShip = this.updateShip.bind(this);
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props.ship !== prevProps.ship) {
-            this.setState({ ship: this.props.ship });
-        }
-    }
-
-    updateShip(value) {
-        this.setState({ ship: value });
-        this.props.updateShip(value);
-    }
-
-    render() {
-        return (
-            <div className="container">
-                <ShipPicker ship={this.state.ship} updateShip={this.updateShip} />
-                <PilotPicker ship={this.state.ship} updateShip={this.updateShip} />
-            </div>
-        );
-    }
-}
+export default ShipContainer;

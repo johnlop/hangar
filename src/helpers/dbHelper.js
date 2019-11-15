@@ -34,6 +34,19 @@ export function generateNewShip(faction, modelId = 0, pilotId = 0, upgradesIds =
     return ship;
 }
 
+export function generateNewSquad(faction) {
+    let ship = generateNewShip(faction);
+    let s = {
+        id: uuidv1(),
+        faction: faction,
+        ships: [ship],
+        cost: ship.cost,
+        type: 'Extended',
+        name: 'New squad',
+    };
+    return s;
+}
+
 export function setDefaultPilotModel(ship, modelId = 0, pilotId = 0) {
     ship.modelId = modelId;
     ship.pilotId = pilotId;

@@ -1,32 +1,24 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-export default class ShipListItem extends Component {
-    constructor(props) {
-        super(props);
+const ShipListItem = ({ initialShip, onItemClick, copyShip, deleteShip, className }) => {
+    const [ship, setShip] = useState(initialShip);
 
-        this.state = { ship: props.ship };
+    const handleClick = () => {
+        onItemClick(ship);
+    };
 
-        this.handleClick = this.handleClick.bind(this);
-        this.handleCopy = this.handleCopy.bind(this);
-        this.handleDelete = this.handleDelete.bind(this);
-    }
+    const handleCopy = () => {
+        copyShip(ship);
+    };
 
-    handleClick() {
-        this.props.onItemClick(this.props.ship);
-    }
+    const handleDelete = () => {
+        deleteShip(ship);
+    };
 
-    handleCopy() {
-        this.props.copyShip(this.props.ship);
-    }
-
-    handleDelete() {
-        this.props.deleteShip(this.props.ship);
-    }
-
-    getInstalledUpgrades() {
+    const getInstalledUpgrades = () => {
         let arr = [];
 
-        for (let u of this.state.ship.upgrades) {
+        for (let u of ship.upgrades) {
             let upg = u.name;
             if (!upg.startsWith('No')) {
                 arr.push(upg);
@@ -34,28 +26,28 @@ export default class ShipListItem extends Component {
         }
 
         return <span>{arr.join(', ')}</span>;
-    }
+    };
 
-    render() {
-        let font = 'xwing-miniatures-ship xwing-miniatures-ship-' + this.state.ship.model.xws;
-        let upg = this.getInstalledUpgrades();
+    let font = 'xwing-miniatures-ship xwing-miniatures-ship-' + ship.model.xws;
+    let upg = getInstalledUpgrades();
 
-        return (
-            <div className={'row ' + this.props.className}>
-                <div className="ship-icon cell" onClick={this.handleClick}>
-                    <i className={font} />
-                </div>
-                <div className="cell" onClick={this.handleClick}>
-                    <div className="title">
-                        {this.state.ship.pilot.name} ({this.state.ship.model.name}) - {this.state.ship.cost}pts
-                    </div>
-                    <div className="fluff">{upg}</div>
-                </div>
-                <div className="cell">
-                    <button onClick={this.handleCopy}>Copy</button>
-                    <button onClick={this.handleDelete}>X</button>
-                </div>
+    return (
+        <div className={'row ' + className}>
+            <div className="ship-icon cell" onClick={handleClick}>
+                <i className={font} />
             </div>
-        );
-    }
-}
+            <div className="cell" onClick={handleClick}>
+                <div className="title">
+                    {ship.pilot.name} ({ship.model.name}) - {ship.cost}pts
+                </div>
+                <div className="fluff">{upg}</div>
+            </div>
+            <div className="cell">
+                <button onClick={handleCopy}>Copy</button>
+                <button onClick={handleDelete}>X</button>
+            </div>
+        </div>
+    );
+};
+
+export default ShipListItem;

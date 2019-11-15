@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import * as database from './data/database';
 import FactionPicker from './components/factionPicker';
@@ -6,182 +6,146 @@ import ShipContainer from './components/shipContainer';
 import ShipListItem from './components/shipListItem';
 import SquadListItem from './components/squadListItem';
 import getQuote from './data/quotes';
-import uuidv1 from 'uuid';
-import { generateNewShip, updateShipData } from './helpers/dbHelper';
+import { generateNewShip, updateShipData, generateNewSquad } from './helpers/dbHelper';
 
-export default class App extends Component {
-    constructor() {
-        super();
+const App = () => {
+    database.load();
 
-        database.load();
+    const [faction, setFaction] = useState({ xws: 'rebelalliance', name: database.db.factions['rebelalliance'].name });
+    let s = generateNewSquad(faction);
+    const [squads, setSquads] = useState([s]);
+    const [selectedSquad, setSelectedSquad] = useState(s);
+    const [selectedShip, setSelectedShip] = useState(s.ships[0]);
 
-        let faction = { xws: 'rebelalliance', name: database.db.factions['rebelalliance'].name };
-        let s = this.generateNewSquad(faction);
-        this.state = {
-            faction: faction,
-            squads: [s],
-            selectedSquad: s,
-            selectedShip: s.ships[0],
-        };
+    const changeFaction = (f) => {
+        setFaction(f);
+    };
 
-        this.changeFaction = this.changeFaction.bind(this);
-        this.addSquad = this.addSquad.bind(this);
-        this.selectSquad = this.selectSquad.bind(this);
-        this.addShip = this.addShip.bind(this);
-        this.selectShip = this.selectShip.bind(this);
-        this.updateShip = this.updateShip.bind(this);
-        this.deleteShip = this.deleteShip.bind(this);
-        this.copyShip = this.copyShip.bind(this);
-        this.changeSquadName = this.changeSquadName.bind(this);
-    }
+    const changeSquadName = (event) => {
+        selectedSquad.name = event.target.value;
+        setSelectedSquad(selectedSquad);
+    };
 
-    changeFaction(faction) {
-        this.setState({ faction: faction });
-    }
-
-    generateNewSquad(faction) {
-        let ship = generateNewShip(faction);
-        let s = {
-            id: uuidv1(),
-            faction: faction,
-            ships: [ship],
-            cost: ship.cost,
-            type: 'Extended',
-            name: 'New squad',
-        };
-        return s;
-    }
-
-    changeSquadName(event) {
-        let s = this.state.selectedSquad;
-        s.name = event.target.value;
-        this.setState({ selectedSquad: s });
-    }
-
-    updateShip(ship) {
+    const updateShip = (ship) => {
         updateShipData(ship);
-        let squad = this.state.selectedSquad;
-        squad.cost = 0;
-        for (let s in squad.ships) {
-            squad.cost += squad.ships[s].cost;
-            if (squad.ships[s].id === ship.id) {
-                squad.ships[s] = ship;
+        selectedSquad.cost = 0;
+        for (let s in selectedSquad.ships) {
+            selectedSquad.cost += selectedSquad.ships[s].cost;
+            if (selectedSquad.ships[s].id === ship.id) {
+                selectedSquad.ships[s] = ship;
             }
         }
-        this.setState({ selectedSquad: squad });
-    }
+        setSelectedSquad(selectedSquad);
+    };
 
-    addSquad() {
-        let squads = this.state.squads;
-        let squad = this.generateNewSquad(this.state.faction);
+    const addSquad = () => {
+        let squad = generateNewSquad(faction);
         squads.push(squad);
-        this.setState({ squads: squads, selectedSquad: squad, selectedShip: squad.ships[0] });
-    }
+        setSquads(squads);
+        setSelectedSquad(squad);
+        setSelectedShip(squad.ships[0]);
+    };
 
-    selectSquad(squad) {
-        this.setState({ selectedSquad: squad, selectedShip: squad.ships[0] });
-    }
+    const selectSquad = (squad) => {
+        setSelectedSquad(squad);
+        setSelectedShip(squad.ships[0]);
+    };
 
-    addShip() {
-        let squad = this.state.selectedSquad;
+    const addShip = () => {
+        let squad = selectedSquad;
         let ship = generateNewShip(squad.faction);
         squad.ships.push(ship);
         squad.cost = 0;
         for (let s in squad.ships) {
             squad.cost += squad.ships[s].cost;
         }
-        this.setState({ selectedSquad: squad, selectedShip: ship });
-    }
+        setSelectedSquad(squad);
+        setSelectedShip(ship);
+    };
 
-    selectShip(ship) {
-        this.setState({ selectedShip: ship });
-    }
+    const selectShip = (ship) => {
+        setSelectedShip(ship);
+    };
 
-    deleteShip(ship) {
-        let squad = this.state.selectedSquad;
+    const deleteShip = (ship) => {
         let idx = 0;
-        for (let i in squad.ships) {
-            if (squad.ships[i].id === ship.id) {
+        for (let i in selectedSquad.ships) {
+            if (selectedSquad.ships[i].id === ship.id) {
                 idx = i;
                 break;
             }
         }
-        squad.ships.splice(idx, 1);
-        squad.cost -= ship.cost;
+        selectedSquad.ships.splice(idx, 1);
+        selectedSquad.cost -= ship.cost;
         let selected = null;
-        if (squad.ships.length > 0) {
-            selected = squad.ships[0];
+        if (selectedSquad.ships.length > 0) {
+            selected = selectedSquad.ships[0];
         }
-        this.setState({ selectedSquad: squad, selectedShip: selected });
-    }
+        setSelectedSquad(selectedSquad);
+        setSelectedShip(selected);
+    };
 
-    copyShip(ship) {
+    const copyShip = (ship) => {
         let newShip = generateNewShip(ship.faction, ship.modelId, ship.pilotId, ship.upgradeIds.splice(0));
-        let squad = this.state.selectedSquad;
-        squad.ships.push(newShip);
-        squad.cost += newShip.cost;
-        this.setState({ selectedSquad: squad, selectedShip: newShip });
-    }
+        selectedSquad.ships.push(newShip);
+        selectedSquad.cost += newShip.cost;
+        setSelectedSquad(selectedSquad);
+        setSelectedShip(newShip);
+    };
 
-    render() {
-        return (
-            <div className="app">
-                <div className="body">
-                    <div className="list">
-                        <div className="header">
-                            <div className="logo">HANGAR 19</div>
-                            <div className="menu">
-                                <FactionPicker faction={this.state.faction} changeFaction={this.changeFaction} />
-                            </div>
+    return (
+        <div className="app">
+            <div className="body">
+                <div className="list">
+                    <div className="header">
+                        <div className="logo">[19]</div>
+                        <div className="menu">
+                            <FactionPicker faction={faction} changeFaction={changeFaction} />
                         </div>
-                        {this.state.squads.map((el) => (
-                            <SquadListItem
-                                key={el.id}
-                                squad={el}
-                                onItemClick={this.selectSquad}
-                                className={this.state.selectedSquad.id === el.id && 'selected'}
-                            />
-                        ))}
-                        <button className="cell" onClick={this.addSquad}>
-                            ADD SQUAD
-                        </button>
                     </div>
-                    <div className="list">
-                        <div className="header">
-                            <div className="menu">
-                                <input
-                                    type="text"
-                                    value={this.state.selectedSquad.name}
-                                    onChange={this.changeSquadName}
-                                />
-                            </div>
+                    {squads.map((el) => (
+                        <SquadListItem
+                            key={el.id}
+                            squad={el}
+                            onItemClick={selectSquad}
+                            className={selectedSquad.id === el.id && 'selected'}
+                        />
+                    ))}
+                    <button className="cell" onClick={addSquad}>
+                        ADD SQUAD
+                    </button>
+                </div>
+                <div className="list">
+                    <div className="header">
+                        <div className="menu">
+                            <input type="text" value={selectedSquad.name} onChange={changeSquadName} />
                         </div>
-                        {this.state.selectedSquad.ships.length
-                            ? this.state.selectedSquad.ships.map((el) => (
-                                  <ShipListItem
-                                      key={el.id}
-                                      ship={el}
-                                      onItemClick={this.selectShip}
-                                      copyShip={this.copyShip}
-                                      deleteShip={this.deleteShip}
-                                      className={this.state.selectedShip.id === el.id && 'selected'}
-                                  />
-                              ))
-                            : null}
-                        <button className="cell" onClick={this.addShip}>
-                            ADD SHIP
-                        </button>
                     </div>
-                    {this.state.selectedShip ? (
-                        <div>
-                            <ShipContainer ship={this.state.selectedShip} updateShip={this.updateShip} />
-                        </div>
-                    ) : null}
+                    {selectedSquad.ships.map((el) => (
+                        <ShipListItem
+                            key={el.id}
+                            initialShip={el}
+                            onItemClick={selectShip}
+                            copyShip={copyShip}
+                            deleteShip={deleteShip}
+                            className={selectedShip.id === el.id && 'selected'}
+                        />
+                    ))}
+                    <button className="cell" onClick={addShip}>
+                        ADD SHIP
+                    </button>
                 </div>
-                <div className="footer">
-                    <span className="fluff">{getQuote()}</span>
-                </div>
+                {selectedShip ? (
+                    <div>
+                        <ShipContainer ship={selectedShip} updateShip={updateShip} />
+                    </div>
+                ) : null}
             </div>
-        );
-    }
-}
+            <div className="footer">
+                <span className="fluff">{getQuote()}</span>
+            </div>
+        </div>
+    );
+};
+
+export default App;

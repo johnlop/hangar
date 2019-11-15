@@ -2,154 +2,156 @@
 @import '../node_modules/xwing-miniatures-font/dist/xwing-miniatures.css';
 
 .app {
-  color: #cdcdcd;
-  font-size: 16px;
-  font-family: 'Roboto';
-  font-weight: 300;
-  height: 100vh;
+    color: #000;
+    font-size: 16px;
+    font-family: 'Roboto';
+    font-weight: 300;
+    height: 100vh;
 }
 
 .header {
-  text-align: left;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  background-color: #111;
-  /* background-image: -webkit-linear-gradient(top,#282828,#191919); */
+    text-align: left;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background-color: #fff;
+    /* background-image: -webkit-linear-gradient(top,#282828,#191919); */
 }
 
-.footer{
-  height: 20px;
-  padding: 10px;
-  text-align: center;
-  font-size: 90%;
-  background-color: #111;
-  /* background-image: -webkit-linear-gradient(top,#282828,#191919); */
+.footer {
+    height: 20px;
+    padding: 10px;
+    text-align: center;
+    font-size: 90%;
+    background-color: #fff;
+    /* background-image: -webkit-linear-gradient(top,#282828,#191919); */
 }
 
 .logo {
-  padding: 0 10px;
+    padding: 0 10px;
 }
 .menu {
-  flex-grow: 1;
-  padding: 0 10px;
+    flex-grow: 1;
+    padding: 0 10px;
 }
 
 .body {
-  height: calc(100vh - 40px);
-  display: flex;
-  background-color: #262626;
+    height: calc(100vh - 40px);
+    display: flex;
+    background-color: #fff;
 }
 
-.container{
-  padding: 10px;
-  margin: 10px;
-  display: flex;
-  height: 100%;
+.container {
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    height: 100%;
 }
 
 .list {
-  width: 500px;
-  background-color: #222222;
-  background-image: -webkit-linear-gradient(left,#282828,#222222);
-  height: 100%;
+    width: 500px;
+    background-color: #fff;
+    /* background-image: -webkit-linear-gradient(left, #282828, #222222); */
+    height: 100%;
 }
 
 .row {
-  display: flex;
+    display: flex;
 }
 
 .cell {
-  padding: 5px;
+    padding: 5px;
 }
 
 .selected {
-  background-color: rgba(80,80,80,.5);
+    background-color: #ddd;
 }
 
-.block{
-  max-width: 400px;
+.block {
+    max-width: 400px;
 }
 
-select, input {
-  margin: 5px;
-  padding: 5px;
-  width: 300px;
-  background-color: #2a2a2a;
-  color: #cdcdcd;
-  border: 1px solid #3e3e3e;
-  border-radius: 4px;
+select,
+input {
+    margin: 5px;
+    padding: 5px;
+    width: 300px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #3e3e3e;
+    border-radius: 4px;
 }
 
 button {
-  padding: 10px;
-  background-color: #2a2a2a;
-  color: #cdcdcd;
-  border: 1px solid #3e3e3e;
-  border-radius: 4px;
+    padding: 10px;
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #3e3e3e;
+    border-radius: 4px;
 }
 
-select:focus, button:focus{
-  outline:0;
+select:focus,
+button:focus {
+    outline: 0;
 }
 
 .ship-icon {
-  font-size: 28px;
+    font-size: 28px;
 }
 
 .squad-icon img {
-  height: 28px;
-  margin: 5px;
+    height: 28px;
+    margin: 5px;
 }
 
-p{
-  font-size: 14px;
-  margin-left: 10px;
-  margin-right: 10px;
+p {
+    font-size: 14px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .fluff {
-  font-style: italic;
-  font-size: 90%;
+    font-style: italic;
+    font-size: 90%;
 }
 
 .title {
-  font-weight: 500;
+    font-weight: 500;
 }
 
 .white {
-  color: #ddd;
+    color: #ccc;
 }
 
 .blue {
-  color: #2989ff;
+    color: #2989ff;
 }
 
 .red {
-  color: rgb(255, 75, 75);
+    color: rgb(255, 75, 75);
 }
 
 .green {
-  color: rgb(75, 192, 75);
+    color: rgb(75, 192, 75);
 }
 
 .yellow {
-  color: rgb(245, 201, 58);
+    color: rgb(245, 201, 58);
 }
 
 .purple {
-  color: rgb(185, 129, 183);
+    color: rgb(185, 129, 183);
 }
 
 .pilot-skill {
-  font-size: 24px;
-  font-weight: bold;
-  color: rgb(230, 145, 19);
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(230, 145, 19);
 }
 
 .card-image {
-  display: inline-flex;
-  height: 30px;
+    display: inline-flex;
+    height: 30px;
 }

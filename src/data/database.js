@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
 
-export var db = {};
+export var db = Object.create(null);
 
 export function load() {
     let factions = require('../data/factions/factions.json');
@@ -53,7 +53,7 @@ function isEven(value) {
 }
 
 function getTextWithIcons(text) {
-    if (!text) return text;
+    if (!text || Array.isArray(text)) return text;
 
     let arr = [];
     let sp = text.split(/\[|\]/g);
