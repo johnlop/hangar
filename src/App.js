@@ -7,15 +7,26 @@ import ShipListItem from './components/shipListItem';
 import SquadListItem from './components/squadListItem';
 import getQuote from './data/quotes';
 import { generateNewShip, updateShipData, generateNewSquad } from './helpers/dbHelper';
+import { useSquadActions } from './hooks/commands/useSquadActions';
+import { useSquadsSelectors } from './hooks/selectors/useSquadSelectors';
 
 const App = () => {
     database.load();
 
     const [faction, setFaction] = useState({ xws: 'rebelalliance', name: database.db.factions['rebelalliance'].name });
     let s = generateNewSquad(faction);
-    const [squads, setSquads] = useState([s]);
+    // const [squads, setSquads] = useState([s]);
     const [selectedSquad, setSelectedSquad] = useState(s);
     const [selectedShip, setSelectedShip] = useState(s.ships[0]);
+
+    const { updateAllSquads } = useSquadActions();
+    const { squads } = useSquadsSelectors();
+
+    const setSquads = (s) => {
+        updateAllSquads(s);
+    };
+
+    // setSquads([s]);
 
     const changeFaction = (f) => {
         setFaction(f);
