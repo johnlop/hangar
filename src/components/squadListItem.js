@@ -5,8 +5,6 @@ export default class SquadListItem extends Component {
         super(props);
 
         this.state = { squad: props.squad };
-
-        this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick() {
@@ -15,7 +13,7 @@ export default class SquadListItem extends Component {
 
     render() {
         return (
-            <div className={'row ' + this.props.className} onClick={this.handleClick}>
+            <div className={'row ' + this.props.className}>
                 <div className="squad-icon cell">
                     <img
                         src={`${process.env.PUBLIC_URL}/img/${this.state.squad.faction.xws}.png`}

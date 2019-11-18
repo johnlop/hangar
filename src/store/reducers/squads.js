@@ -1,20 +1,32 @@
-import { SET_SQUADS, SET_SQUAD } from '../actions/squads';
+import { SET_SQUADS, SET_SQUAD, SET_SELECTED_SQUAD, SET_SELECTED_SHIP, SET_SHIP } from '../actions/squads';
 
 const defaultStore = {
     map: {},
 };
 
 export function squadsReducer(squads = defaultStore, action) {
+    console.log(action.type);
     if (action.type === SET_SQUADS) {
-        squads.collection = action.squads;
         squads.map = {};
         action.squads.forEach((squad) => {
             squads.map[squad.id] = squad;
         });
         return squads;
     }
+    if (action.type === SET_SELECTED_SQUAD) {
+        squads.selectedSquad = action.squadId;
+        return squads;
+    }
     if (action.type === SET_SQUAD) {
-        squads.map[action.squad.id] = action.squad;
+        squads.map[squads.selectedSquad] = action.squad;
+        return squads;
+    }
+    if (action.type === SET_SELECTED_SHIP) {
+        squads.selectedShip = action.shipId;
+        return squads;
+    }
+    if (action.type === SET_SHIP) {
+        squads.map[squads.selectedSquad].ships[squads.selectedShip] = action.squad;
         return squads;
     }
     return squads;

@@ -44,6 +44,7 @@ export function generateNewSquad(faction) {
         type: 'Extended',
         name: 'New squad',
     };
+    // s.ships[ship.id] = ship;
     return s;
 }
 

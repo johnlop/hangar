@@ -15,12 +15,10 @@ export default class PilotPicker extends Component {
     changePilotId(event) {
         let s = this.state.ship;
         s.pilotId = event.target.value;
-        //this.setState({ ship: s });
         this.props.updateShip(s);
     }
 
     updateShip(s) {
-        //this.setState({ ship: s });
         this.props.updateShip(s);
     }
 
