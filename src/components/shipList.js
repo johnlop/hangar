@@ -55,7 +55,7 @@ const ShipList = () => {
         <div className="list">
             <div className="header">
                 <div className="menu">
-                    {/* <input type="text" value={selectedSquad.name} onChange={changeSquadName} /> */}
+                    <input type="text" value={selectedSquad.name} onChange={changeSquadName} />
                 </div>
             </div>
             {selectedSquad.ships &&

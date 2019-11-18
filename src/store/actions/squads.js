@@ -1,8 +1,19 @@
+export const SET_FACTION = 'SET_FACTION';
 export const SET_SQUADS = 'SET_SQUADS';
 export const SET_SELECTED_SQUAD = 'SET_SELECTED_SQUAD';
 export const SET_SQUAD = 'SET_SQUAD';
 export const SET_SELECTED_SHIP = 'SET_SELECTED_SHIP';
 export const SET_SHIP = 'SET_SHIP';
+
+export function setFaction(faction = {}) {
+    return {
+        type: SET_FACTION,
+        squads: faction,
+        meta: {
+            log: 'Set current faction',
+        },
+    };
+}
 
 export function setSquads(squads = []) {
     return {

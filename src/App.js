@@ -13,23 +13,29 @@ import { useSquadsSelectors } from './hooks/selectors/useSquadSelectors';
 const App = () => {
     database.load();
 
-    const [faction, setFaction] = useState({ xws: 'rebelalliance', name: database.db.factions['rebelalliance'].name });
-
-    const { updateAllSquads, updateSelectedSquad, updateSelectedShip, updateShip, updateSquad } = useSquadActions();
-    const { selectedSquad, selectedShip } = useSquadsSelectors();
+    const {
+        updateFaction,
+        updateAllSquads,
+        updateSelectedSquad,
+        updateSelectedShip,
+        updateShip,
+        updateSquad,
+    } = useSquadActions();
+    const { faction, selectedSquad, selectedShip } = useSquadsSelectors();
 
     useEffect(() => {
-        let s = generateNewSquad(faction);
+        let f = { xws: 'rebelalliance', name: database.db.factions['rebelalliance'].name };
+        updateFaction(f);
+        let s = generateNewSquad(f);
         updateAllSquads([s]);
         updateSelectedSquad(s.id);
         updateSelectedShip(0);
     }, []);
 
     const changeFaction = (f) => {
-        setFaction(f);
+        updateFaction(f);
     };
 
-    console.log(selectedSquad);
     const updateShipInfo = (ship) => {
         updateShipData(ship);
         selectedSquad.cost = 0;

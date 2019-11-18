@@ -2,32 +2,15 @@ import React, { Component } from 'react';
 import * as database from '../data/database';
 import Ship from './ship';
 
-export default class ShipPicker extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { ship: props.ship };
-
-        this.changeModelId = this.changeModelId.bind(this);
-    }
-
-    changeModelId(event) {
-        let s = this.state.ship;
+const ShipPicker = ({ ship, updateShip }) => {
+    const changeModelId = (event) => {
+        let s = ship;
         s.modelId = event.target.value;
         s.pilotId = 0;
-        // s.upgradeIds = {};
-        // s.upgrades = {};
-        this.setState({ ship: s });
-        this.props.updateShip(s);
-    }
+        updateShip(s);
+    };
 
-    componentDidUpdate(prevProps) {
-        if (this.props.ship !== prevProps.ship) {
-            this.setState({ ship: this.props.ship });
-        }
-    }
-
-    getShips(faction) {
+    const getShips = (faction) => {
         let arr = [];
 
         for (let key in database.db.factions[faction].ships) {
@@ -39,18 +22,18 @@ export default class ShipPicker extends Component {
         }
 
         return arr;
-    }
+    };
 
-    render() {
-        this.shipOptions = this.getShips(this.state.ship.faction.xws);
+    const shipOptions = getShips(ship.faction.xws);
 
-        return (
-            <div className="block">
-                <select value={this.state.ship.modelId} onChange={this.changeModelId}>
-                    {this.shipOptions}
-                </select>
-                <Ship ship={this.state.ship} />
-            </div>
-        );
-    }
-}
+    return (
+        <div className="block">
+            <select value={ship.modelId} onChange={changeModelId}>
+                {shipOptions}
+            </select>
+            <Ship ship={ship} />
+        </div>
+    );
+};
+
+export default ShipPicker;

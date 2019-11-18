@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 export function useSquadsSelectors() {
-    const faction = useSelector((state) => state.faction);
+    const faction = useSelector((state) => state.squads.faction);
     const squadMap = useSelector((state) => state.squads.map || {});
     const selectedSquad = useSelector((state) => state.squads.map[state.squads.selectedSquad]);
     const ships = useSelector((state) =>

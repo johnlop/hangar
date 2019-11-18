@@ -1,8 +1,19 @@
 import { useDispatch } from 'react-redux';
-import { setSquad, setSquads, setSelectedSquad, setSelectedShip, setShip } from '../../store/actions/squads';
+import {
+    setFaction,
+    setSquad,
+    setSquads,
+    setSelectedSquad,
+    setSelectedShip,
+    setShip,
+} from '../../store/actions/squads';
 
 export function useSquadActions() {
     const dispatch = useDispatch();
+
+    const updateFaction = (faction) => {
+        dispatch(setFaction(faction));
+    };
 
     const updateAllSquads = (squads) => {
         dispatch(setSquads(squads));
@@ -25,6 +36,7 @@ export function useSquadActions() {
     };
 
     return {
+        updateFaction,
         updateAllSquads,
         updateSelectedSquad,
         updateSquad,
