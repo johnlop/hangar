@@ -12,10 +12,10 @@ const s = generateNewSquad(f);
 
 const initialState = {
     faction: f,
-    map: {},
+    squads: {},
 };
 
-initialState.map[s.id] = s;
+initialState.squads[s.id] = s;
 initialState.selectedSquadId = s.id;
 initialState.selectedShipId = 0;
 

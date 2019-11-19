@@ -1,7 +1,7 @@
 import { SET_SQUADS, SET_SQUAD, SET_SELECTED_SQUAD, SET_SELECTED_SHIP, SET_SHIP, SET_FACTION } from '../actions/squads';
 
 const defaultStore = {
-    map: {},
+    squads: {},
 };
 
 export function squadsReducer(squads = defaultStore, action) {
@@ -11,9 +11,9 @@ export function squadsReducer(squads = defaultStore, action) {
         return squads;
     }
     if (action.type === SET_SQUADS) {
-        squads.map = {};
+        squads.squads = {};
         action.squads.forEach((squad) => {
-            squads.map[squad.id] = squad;
+            squads.squads[squad.id] = squad;
         });
         return squads;
     }
@@ -22,7 +22,7 @@ export function squadsReducer(squads = defaultStore, action) {
         return squads;
     }
     if (action.type === SET_SQUAD) {
-        squads.map[squads.selectedSquadId] = action.squad;
+        squads.squads[squads.selectedSquadId] = action.squad;
         return squads;
     }
     if (action.type === SET_SELECTED_SHIP) {
@@ -30,7 +30,7 @@ export function squadsReducer(squads = defaultStore, action) {
         return squads;
     }
     if (action.type === SET_SHIP) {
-        squads.map[squads.selectedSquadId].ships[squads.selectedShipId] = action.squad;
+        squads.squads[squads.selectedSquadId].ships[squads.selectedShipId] = action.squad;
         return squads;
     }
     return squads;
