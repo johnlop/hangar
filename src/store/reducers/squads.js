@@ -4,34 +4,34 @@ const defaultStore = {
     squads: {},
 };
 
-export function squadsReducer(squads = defaultStore, action) {
+export function squadsReducer(state = defaultStore, action) {
     console.log(action.type);
     if (action.type === SET_FACTION) {
-        squads.faction = action.faction;
-        return squads;
+        state.faction = action.faction;
+        return state;
     }
     if (action.type === SET_SQUADS) {
-        squads.squads = {};
+        state.squads = {};
         action.squads.forEach((squad) => {
-            squads.squads[squad.id] = squad;
+            state.squads[squad.id] = squad;
         });
-        return squads;
+        return state;
     }
     if (action.type === SET_SELECTED_SQUAD) {
-        squads.selectedSquadId = action.squadId;
-        return squads;
+        state.selectedSquadId = action.squadId;
+        return state;
     }
     if (action.type === SET_SQUAD) {
-        squads.squads[squads.selectedSquadId] = action.squad;
-        return squads;
+        state.squads[state.selectedSquadId] = action.squad;
+        return state;
     }
     if (action.type === SET_SELECTED_SHIP) {
-        squads.selectedShipId = action.shipId;
-        return squads;
+        state.selectedShipId = action.shipId;
+        return state;
     }
     if (action.type === SET_SHIP) {
-        squads.squads[squads.selectedSquadId].ships[squads.selectedShipId] = action.squad;
-        return squads;
+        state.squads[state.selectedSquadId].ships[state.selectedShipId] = action.ship;
+        return state;
     }
-    return squads;
+    return state;
 }

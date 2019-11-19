@@ -17,7 +17,6 @@ const App = () => {
         updateShipData(ship);
         selectedSquad.cost = 0;
         for (let s in selectedSquad.ships) {
-            selectedSquad.cost += selectedSquad.ships[s].cost;
             if (selectedSquad.ships[s].id === ship.id) {
                 selectedSquad.ships[s] = ship;
             }

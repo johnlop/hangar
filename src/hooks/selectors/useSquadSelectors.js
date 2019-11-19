@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import _ from 'lodash';
 
 export function useSquadsSelectors() {
     const faction = useSelector((state) => state.faction);
@@ -13,5 +14,13 @@ export function useSquadsSelectors() {
 
     const selectedShipId = useSelector((state) => state.selectedShipId);
 
-    return { faction, squads: Object.values(squadsMap), selectedSquad, ships, selectedShipId, selectedShip };
+    return {
+        faction,
+        squads: Object.values(squadsMap),
+        selectedSquad,
+        ships,
+        selectedShipId,
+        selectedShip,
+        // selectedShip: _.cloneDeep(selectedShip),
+    };
 }

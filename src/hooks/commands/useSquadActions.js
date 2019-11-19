@@ -24,6 +24,10 @@ export function useSquadActions() {
     };
 
     const updateSquad = (squad) => {
+        squad.cost = 0;
+        for (let s in squad.ships) {
+            squad.cost += squad.ships[s].cost;
+        }
         dispatch(setSquad(squad));
     };
 
@@ -32,6 +36,7 @@ export function useSquadActions() {
     };
 
     const updateShip = (ship) => {
+        ship.updt = new Date();
         dispatch(setShip(ship));
     };
 

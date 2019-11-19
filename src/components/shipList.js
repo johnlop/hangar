@@ -11,10 +11,6 @@ const ShipList = () => {
     const addShip = () => {
         let ship = generateNewShip(selectedSquad.faction);
         selectedSquad.ships.push(ship);
-        selectedSquad.cost = 0;
-        for (let s in selectedSquad.ships) {
-            selectedSquad.cost += selectedSquad.ships[s].cost;
-        }
         updateSquad(selectedSquad);
         updateSelectedShip(selectedSquad.ships.length - 1);
     };
@@ -32,7 +28,6 @@ const ShipList = () => {
             }
         }
         selectedSquad.ships.splice(idx, 1);
-        selectedSquad.cost -= ship.cost;
         updateSquad(selectedSquad);
         updateSelectedShip(selectedSquad.ships.length - 1);
     };
