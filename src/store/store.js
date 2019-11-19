@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { logger } from './middleware/logger';
-import { appReducer } from './reducers';
 import { generateNewSquad } from '../helpers/dbHelper';
 import * as database from '../data/database';
 import { squadsReducer } from './reducers/squads';
@@ -12,14 +11,12 @@ const f = { xws: 'rebelalliance', name: database.db.factions['rebelalliance'].na
 const s = generateNewSquad(f);
 
 const initialState = {
-    squads: {
-        faction: f,
-        map: {},
-    },
+    faction: f,
+    map: {},
 };
 
-initialState.squads.map[s.id] = s;
-initialState.squads.selectedSquadId = s.id;
-initialState.squads.selectedShipId = 0;
+initialState.map[s.id] = s;
+initialState.selectedSquadId = s.id;
+initialState.selectedShipId = 0;
 
-export const store = createStore(appReducer, initialState, composeEnhancers(applyMiddleware(logger)));
+export const store = createStore(squadsReducer, initialState, composeEnhancers(applyMiddleware(logger)));

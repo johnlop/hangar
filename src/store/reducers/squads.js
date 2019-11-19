@@ -18,19 +18,19 @@ export function squadsReducer(squads = defaultStore, action) {
         return squads;
     }
     if (action.type === SET_SELECTED_SQUAD) {
-        squads.selectedSquad = action.squadId;
+        squads.selectedSquadId = action.squadId;
         return squads;
     }
     if (action.type === SET_SQUAD) {
-        squads.map[squads.selectedSquad] = action.squad;
+        squads.map[squads.selectedSquadId] = action.squad;
         return squads;
     }
     if (action.type === SET_SELECTED_SHIP) {
-        squads.selectedShip = action.shipId;
+        squads.selectedShipId = action.shipId;
         return squads;
     }
     if (action.type === SET_SHIP) {
-        squads.map[squads.selectedSquad].ships[squads.selectedShip] = action.squad;
+        squads.map[squads.selectedSquadId].ships[squads.selectedShipId] = action.squad;
         return squads;
     }
     return squads;
