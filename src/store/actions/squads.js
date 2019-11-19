@@ -8,7 +8,7 @@ export const SET_SHIP = 'SET_SHIP';
 export function setFaction(faction = {}) {
     return {
         type: SET_FACTION,
-        squads: faction,
+        faction,
         meta: {
             log: 'Set current faction',
         },

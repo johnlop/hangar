@@ -6,7 +6,6 @@ import { useSquadActions } from '../hooks/commands/useSquadActions';
 
 const SquadList = () => {
     const { faction, squads, selectedSquad } = useSquadsSelectors();
-
     const { updateAllSquads, updateSelectedSquad } = useSquadActions();
 
     const addSquad = () => {
@@ -15,8 +14,8 @@ const SquadList = () => {
         updateAllSquads(squads);
     };
 
-    const selectSquad = (squad) => {
-        updateSelectedSquad(squad.id);
+    const selectSquad = (id) => {
+        updateSelectedSquad(id);
     };
 
     return (
@@ -26,7 +25,7 @@ const SquadList = () => {
                     <SquadListItem
                         key={squad.id}
                         squad={squad}
-                        onClick={selectSquad}
+                        handleClick={() => selectSquad(squad.id)}
                         className={selectedSquad.id === squad.id && 'selected'}
                     />
                 ))}

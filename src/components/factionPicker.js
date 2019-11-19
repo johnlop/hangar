@@ -1,23 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as database from '../data/database';
+import { useSquadActions } from '../hooks/commands/useSquadActions';
+import { useSquadsSelectors } from '../hooks/selectors/useSquadSelectors';
 
-export default class FactionPicker extends Component {
-    constructor(props) {
-        super(props);
+const FactionPicker = () => {
+    const { updateFaction } = useSquadActions();
+    const { faction } = useSquadsSelectors();
 
-        this.state = { faction: props.faction };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.factionOptions = this.getFactions();
-    }
-
-    handleChange(event) {
+    const changeFaction = (event) => {
         let faction = { xws: event.target.value, name: database.db.factions[event.target.value].name };
-        this.setState({ faction: faction });
-        this.props.changeFaction(faction);
-    }
+        updateFaction(faction);
+    };
 
-    getFactions() {
+    const getFactions = () => {
         let arr = [];
 
         for (let key in database.db.factions) {
@@ -29,13 +24,15 @@ export default class FactionPicker extends Component {
         }
 
         return arr;
-    }
+    };
 
-    render() {
-        return (
-            <select value={this.state.faction.xws} onChange={this.handleChange}>
-                {this.factionOptions}
-            </select>
-        );
-    }
-}
+    const factionOptions = getFactions();
+
+    return (
+        <select value={faction.xws} onChange={changeFaction}>
+            {factionOptions}
+        </select>
+    );
+};
+
+export default FactionPicker;

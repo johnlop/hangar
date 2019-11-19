@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import * as database from '../data/database';
 import Ship from './ship';
 

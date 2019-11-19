@@ -1,40 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import * as database from './data/database';
 import FactionPicker from './components/factionPicker';
 import ShipContainer from './components/shipContainer';
 import getQuote from './data/quotes';
-import { updateShipData, generateNewSquad } from './helpers/dbHelper';
+import { updateShipData } from './helpers/dbHelper';
 import { useSquadActions } from './hooks/commands/useSquadActions';
 import SquadList from './components/squadList';
 import ShipList from './components/shipList';
 import { useSquadsSelectors } from './hooks/selectors/useSquadSelectors';
 
 const App = () => {
-    database.load();
-
-    const {
-        updateFaction,
-        updateAllSquads,
-        updateSelectedSquad,
-        updateSelectedShip,
-        updateShip,
-        updateSquad,
-    } = useSquadActions();
-    const { faction, selectedSquad, selectedShip } = useSquadsSelectors();
-
-    useEffect(() => {
-        let f = { xws: 'rebelalliance', name: database.db.factions['rebelalliance'].name };
-        updateFaction(f);
-        let s = generateNewSquad(f);
-        updateAllSquads([s]);
-        updateSelectedSquad(s.id);
-        updateSelectedShip(0);
-    }, []);
-
-    const changeFaction = (f) => {
-        updateFaction(f);
-    };
+    const { updateShip, updateSquad } = useSquadActions();
+    const { selectedSquad, selectedShip } = useSquadsSelectors();
 
     const updateShipInfo = (ship) => {
         updateShipData(ship);
@@ -56,7 +33,7 @@ const App = () => {
                     <div className="header">
                         <div className="logo">[19]</div>
                         <div className="menu">
-                            <FactionPicker faction={faction} changeFaction={changeFaction} />
+                            <FactionPicker />
                         </div>
                     </div>
                     <SquadList />

@@ -9,15 +9,14 @@ const ShipList = () => {
     const { updateSquad, updateSelectedShip } = useSquadActions();
 
     const addShip = () => {
-        let squad = selectedSquad;
-        let ship = generateNewShip(squad.faction);
-        squad.ships.push(ship);
-        squad.cost = 0;
-        for (let s in squad.ships) {
-            squad.cost += squad.ships[s].cost;
+        let ship = generateNewShip(selectedSquad.faction);
+        selectedSquad.ships.push(ship);
+        selectedSquad.cost = 0;
+        for (let s in selectedSquad.ships) {
+            selectedSquad.cost += selectedSquad.ships[s].cost;
         }
-        updateSquad(squad);
-        updateSelectedShip(squad.ships.length - 1);
+        updateSquad(selectedSquad);
+        updateSelectedShip(selectedSquad.ships.length - 1);
     };
 
     const selectShip = (id) => {
@@ -66,7 +65,7 @@ const ShipList = () => {
                         onItemClick={() => selectShip(idx)}
                         copyShip={copyShip}
                         deleteShip={() => deleteShip(idx)}
-                        className={selectedShipId == idx && 'selected'}
+                        className={selectedShipId === idx && 'selected'}
                     />
                 ))}
             <button className="cell" onClick={addShip}>
